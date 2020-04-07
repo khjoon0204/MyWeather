@@ -14,8 +14,19 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        addVC(name: "ListViewController")
+        
     }
 
+    func addVC(name: String){
+        if let vc = storyboard?.instantiateViewController(withIdentifier: name){
+            self.addChild(vc)
+            self.view.addSubview(vc.view)
+            vc.view.pinEdgesToSuperView()
+        }
+    }
+    
+    
 
 }
 

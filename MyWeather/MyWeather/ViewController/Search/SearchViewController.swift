@@ -31,11 +31,11 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupViewController()
+        setup()
 //        registerNib()
     }
     
-    private func setupViewController() {
+    private func setup() {
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self

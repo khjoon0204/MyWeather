@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TopHeaderCollectionReusableView" id="U6b-Vx-4bR" customClass="TopHeaderCollectionReusableView" customModule="MyWeather" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qzo-aI-BJZ">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="도시" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lwu-aE-wXf">
+                            <rect key="frame" x="116.5" y="95" width="87" height="60"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemIndigoColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="lwu-aE-wXf" firstAttribute="centerX" secondItem="Qzo-aI-BJZ" secondAttribute="centerX" id="5yV-0u-igt"/>
+                        <constraint firstItem="lwu-aE-wXf" firstAttribute="centerY" secondItem="Qzo-aI-BJZ" secondAttribute="centerY" id="Rz4-gL-zcC"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Qzo-aI-BJZ" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="KZ9-et-zu8"/>
+                <constraint firstItem="Qzo-aI-BJZ" firstAttribute="leading" secondItem="VXr-Tz-HHm" secondAttribute="leading" id="TW2-kU-2p3"/>
+                <constraint firstItem="VXr-Tz-HHm" firstAttribute="trailing" secondItem="Qzo-aI-BJZ" secondAttribute="trailing" id="bEj-q0-rJG"/>
+                <constraint firstAttribute="bottom" secondItem="Qzo-aI-BJZ" secondAttribute="bottom" id="k3A-bT-hLh"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
+            <point key="canvasLocation" x="132" y="153"/>
+        </collectionReusableView>
+    </objects>
+</document>
