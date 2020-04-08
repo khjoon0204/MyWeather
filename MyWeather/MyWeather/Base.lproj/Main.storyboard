@@ -17,10 +17,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <gestureRecognizers/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="JhU-o1-joF" appends="YES" id="ayQ-6m-cOh"/>
+                        </connections>
                     </view>
+                    <connections>
+                        <outlet property="pinchGestureRecognizer" destination="JhU-o1-joF" id="QVO-ZM-1pB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <pinchGestureRecognizer id="JhU-o1-joF">
+                    <connections>
+                        <action selector="pinch:" destination="BYZ-38-t0r" id="L8u-Xw-4Jz"/>
+                    </connections>
+                </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="132" y="138"/>
         </scene>
@@ -36,17 +48,25 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jx3-jv-ODe">
+                            <navigationBar clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jx3-jv-ODe">
                                 <rect key="frame" x="0.0" y="818" width="414" height="44"/>
                                 <items>
                                     <navigationItem id="lmX-fh-R5e">
                                         <nil key="title"/>
-                                        <barButtonItem key="leftBarButtonItem" title="Web" id="a00-5I-WXh"/>
+                                        <barButtonItem key="leftBarButtonItem" title="Web" id="a00-5I-WXh">
+                                            <connections>
+                                                <action selector="pressWeb:" destination="vez-0C-xzv" id="6I3-IM-B31"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <pageControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" id="QdL-lO-UTd">
                                             <rect key="frame" x="124.5" y="3.5" width="165" height="37"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </pageControl>
-                                        <barButtonItem key="rightBarButtonItem" title="List" id="rTh-Ly-iqd"/>
+                                        <barButtonItem key="rightBarButtonItem" title="List" id="rTh-Ly-iqd">
+                                            <connections>
+                                                <action selector="pressList:" destination="vez-0C-xzv" id="KZj-b2-Ea8"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -54,35 +74,25 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="jx3-jv-ODe" firstAttribute="top" secondItem="aXO-Mv-2Fr" secondAttribute="bottom" id="Kre-qA-C7k"/>
-                            <constraint firstItem="jx3-jv-ODe" firstAttribute="top" secondItem="aXO-Mv-2Fr" secondAttribute="bottom" id="LDd-i7-aoW"/>
                             <constraint firstItem="aXO-Mv-2Fr" firstAttribute="trailing" secondItem="tnk-zn-l8u" secondAttribute="trailing" id="WBo-Ys-VFJ"/>
-                            <constraint firstItem="jx3-jv-ODe" firstAttribute="bottom" secondItem="tnk-zn-l8u" secondAttribute="bottom" id="YTI-0J-yAV"/>
+                            <constraint firstItem="jx3-jv-ODe" firstAttribute="top" secondItem="aXO-Mv-2Fr" secondAttribute="bottom" id="Zkl-xY-t9E"/>
                             <constraint firstItem="aXO-Mv-2Fr" firstAttribute="top" secondItem="4d4-YG-YmJ" secondAttribute="top" id="cJs-KI-iuX"/>
                             <constraint firstItem="aXO-Mv-2Fr" firstAttribute="leading" secondItem="tnk-zn-l8u" secondAttribute="leading" id="dEb-pl-hxz"/>
+                            <constraint firstItem="jx3-jv-ODe" firstAttribute="bottom" secondItem="tnk-zn-l8u" secondAttribute="bottom" id="nqT-Xo-2z0"/>
                             <constraint firstItem="jx3-jv-ODe" firstAttribute="trailing" secondItem="tnk-zn-l8u" secondAttribute="trailing" id="rL6-sl-6sr"/>
                             <constraint firstItem="jx3-jv-ODe" firstAttribute="leading" secondItem="tnk-zn-l8u" secondAttribute="leading" id="xRb-8L-TRX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tnk-zn-l8u"/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="vdd-zU-sem" appends="YES" id="jBj-JH-UAW"/>
-                        </connections>
                     </view>
                     <connections>
                         <outlet property="contentView" destination="aXO-Mv-2Fr" id="UO6-jm-lbL"/>
                         <outlet property="navigationBar" destination="jx3-jv-ODe" id="Dfx-Ht-k1a"/>
                         <outlet property="pageControl" destination="QdL-lO-UTd" id="dsT-kJ-f36"/>
-                        <outlet property="pinchGestureRecognizer" destination="vdd-zU-sem" id="ruM-k1-1rh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jbH-vh-PHY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <pinchGestureRecognizer id="vdd-zU-sem">
-                    <connections>
-                        <action selector="pinch:" destination="vez-0C-xzv" id="SOx-XM-LC4"/>
-                    </connections>
-                </pinchGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1109" y="138"/>
+            <point key="canvasLocation" x="1108.6956521739132" y="137.94642857142856"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="WaC-Bg-UnM">
@@ -102,7 +112,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="WeeklyCollectionViewCell" translatesAutoresizingMaskIntoConstraints="NO" id="zf6-EV-4po" customClass="WeeklyCollectionViewCell" customModule="MyWeather" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" reuseIdentifier="WeeklyCollectionViewCell" translatesAutoresizingMaskIntoConstraints="NO" id="zf6-EV-4po" customClass="WeeklyCollectionViewCell" customModule="MyWeather" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="800"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="6YC-9f-QmF">
@@ -158,19 +168,34 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <gestureRecognizers/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DetailHeaderTableViewCell" id="kdk-vl-UPD" customClass="DetailHeaderTableViewCell" customModule="MyWeather" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DetailHeaderTableViewCell" id="kdk-vl-UPD" customClass="DetailHeaderTableViewCell" customModule="MyWeather" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="100.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kdk-vl-UPD" id="kn0-le-rZV">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="100.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3f4-81-HOz">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="100.5"/>
+                                                    <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" priority="750" constant="100" id="6q7-Hf-PIO"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="3f4-81-HOz" firstAttribute="leading" secondItem="kn0-le-rZV" secondAttribute="leading" id="46g-jl-tuQ"/>
+                                                <constraint firstAttribute="bottom" secondItem="3f4-81-HOz" secondAttribute="bottom" id="KMF-jK-IZi"/>
+                                                <constraint firstAttribute="trailing" secondItem="3f4-81-HOz" secondAttribute="trailing" id="ph0-R1-VDe"/>
+                                                <constraint firstItem="3f4-81-HOz" firstAttribute="top" secondItem="kn0-le-rZV" secondAttribute="top" id="r4l-lO-f3z"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="backV" destination="3f4-81-HOz" id="N98-Cm-KGp"/>
+                                            <outlet property="constraintHeight" destination="6q7-Hf-PIO" id="67d-Ju-foh"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="DBj-3d-JJa" appends="YES" id="9Gm-4g-qWg"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -184,16 +209,10 @@
                         <viewLayoutGuide key="safeArea" id="RUS-Ud-D8u"/>
                     </view>
                     <connections>
-                        <outlet property="pinchGestureRecognizer" destination="DBj-3d-JJa" id="aEq-rT-y2y"/>
                         <outlet property="tableView" destination="MRP-34-yTJ" id="D2a-bK-CT9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HTb-Ug-K7J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <pinchGestureRecognizer id="DBj-3d-JJa">
-                    <connections>
-                        <action selector="pinch:" destination="ANe-8G-NQT" id="5q9-9z-WIt"/>
-                    </connections>
-                </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1109" y="-645"/>
         </scene>

@@ -9,7 +9,9 @@
 import UIKit
 
 class DetailHeaderTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var constraintHeight: NSLayoutConstraint!
+    @IBOutlet weak var backV: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

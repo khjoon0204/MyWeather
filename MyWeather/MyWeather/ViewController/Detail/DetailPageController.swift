@@ -12,15 +12,17 @@ class DetailPageController: UIViewController {
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var pageControl: UIPageControl!
-    @IBOutlet var pinchGestureRecognizer: UIPinchGestureRecognizer!
     
     let pageVC = DetailPageViewController()
+    
+    var viewController: ViewController{
+        return parent as! ViewController
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         addPageViewController()
-                
+        print(#function)
     }
     
     func addPageViewController(){
@@ -32,15 +34,10 @@ class DetailPageController: UIViewController {
     func selectPage(page: Int){
         pageControl.currentPage = page
     }
-    
-    @IBAction func pinch(_ sender: UIPinchGestureRecognizer) {
-        transitionListView()
+    @IBAction func pressWeb(_ sender: UIBarButtonItem) {
     }
-    
-    func transitionListView(){
-        if pinchGestureRecognizer.state.rawValue >= 1{
-            dismiss(animated: true, completion: nil)
-        }
+    @IBAction func pressList(_ sender: Any) {
+        viewController.translateToList()
     }
     
 }

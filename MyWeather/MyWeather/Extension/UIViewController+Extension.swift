@@ -9,12 +9,18 @@
 import Foundation
 import UIKit
 
-//extension UIViewController: UIViewControllerTransitioningDelegate{
-////    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-////        return PresentAnimationController(originFrame: UIScreen.main.bounds)
-////    }
-////    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-////        return DismissAnimationController(destinationFrame: UIScreen.main.bounds)
-////    }
-//    
-//}
+extension UIViewController{
+    
+    
+    
+    
+//    func addVC(name: String){
+//        if let vc = storyboard?.instantiateViewController(withIdentifier: name){
+//            self.addChild(vc)
+//            self.view.addSubview(vc.view)
+//            vc.view.pinEdgesToSuperView()
+//        }
+//    }
+    
+    
+}

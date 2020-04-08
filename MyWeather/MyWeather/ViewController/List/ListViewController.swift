@@ -10,65 +10,26 @@ import UIKit
 
 class ListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet var pinchGestureRecognizer: UIPinchGestureRecognizer!
     
     let CELL_HEIGHT: CGFloat = 100
     
-    //    var weathers: [OneWeather] = []
-    
-    var pageC: DetailPageController{
-        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailPageController") as! DetailPageController
-        vc.modalPresentationStyle = .fullScreen
-        vc.transitioningDelegate = self
-        return vc
+    var viewController: ViewController{
+        return parent as! ViewController
     }
     
-    var pinchIdx: IndexPath?{
-        didSet{
-            if oldValue == nil{
-                let rect = tableView.rectForRow(at: pinchIdx!)
-                destFrame = CGRect(origin: rect.origin, size: UIScreen.main.bounds.size )
-                print("destFrame=\(destFrame)")
-            }
-        }
-    }
-    
-    var orgFrame = CGRect.zero
-    var destFrame = CGRect.zero
-    var fromDismiss = false
+    var pinchIdx = IndexPath()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.addChild(pageC)
         setup()
 
     }
     
     private func setup(){
-        
         tableView.delegate = self
         tableView.dataSource = self
                 
     }
-    
-//    private func addViewController(){
-//        self.addChild(pageC)
-//        self.contentView.addSubview(pageVC.view)
-//        pageVC.view.pinEdgesToSuperView()
-//    }
-
-    @IBAction func pinch(_ sender: UIPinchGestureRecognizer) {
-        let touch = sender.location(in: tableView)
-        
-        if let indexPath = tableView.indexPathForRow(at: touch) {
-//            print("indexPath=\(indexPath) scale=\(sender.scale) state=\(sender.state.rawValue)")
-            pinchIdx = indexPath
-            tableView.reloadData()
-            
-        }
-        
-    }
-    
 }
 
 
@@ -80,50 +41,59 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "DetailHeaderTableViewCell", for: indexPath) as? DetailHeaderTableViewCell{
-            transitionDetailView(indexPath: indexPath, cell: cell)
+            
+            removeDetailView(indexPath: indexPath, cell: cell)
             addDetailView(indexPath: indexPath, cell: cell)
+            changeHeight(indexPath: indexPath, cell: cell)            
+            transitionDetailView(indexPath: indexPath, cell: cell)
+            
 //            print("\(#function) gesture_state=\(pinchGestureRecognizer.state.rawValue)")
             return cell
         }
         return UITableViewCell()
     }
     
+    func changeHeight(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
+        if indexPath == pinchIdx{
+//            print(#function)
+            cell.constraintHeight.constant = CELL_HEIGHT * viewController.pinchGestureRecognizer.scale
+        }
+    }
+    
     func addDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
-        if let idx = pinchIdx, indexPath == idx, cell.contentView.subviews.count == 0, pinchGestureRecognizer.scale > 2.0{
-            cell.contentView.addSubview(pageC.view)
+        if indexPath == pinchIdx,
+            cell.backV.subviews.count == 0,
+        viewController.pinchGestureRecognizer.scale > 2{
+            cell.backV.addSubview(viewController.detailC.view)
+            viewController.detailC.view.pinEdgesToSuperView()
+//            print(viewController.detailC.view.frame)
+        }
+    }
+    
+    func removeDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
+        if indexPath == pinchIdx,
+            cell.backV.subviews.count > 0,
+            viewController.pinchGestureRecognizer.scale <= 1{
+            viewController.detailC.view.removeFromSuperview()
         }
     }
     
     func transitionDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
-        if let idx = pinchIdx, indexPath == idx,
-            cell.contentView.subviews.count > 0,
-            pinchGestureRecognizer.state.rawValue >= 2,
-        pinchGestureRecognizer.scale > 3{
-            let rect = tableView.rectForRow(at: indexPath)
-            orgFrame = CGRect(origin: rect.origin, size: UIScreen.main.bounds.size )
-            present(pageC, animated: true, completion: nil)
-//            pinchIdx = nil
+        if indexPath == pinchIdx,
+            cell.backV.subviews.count > 0,
+            viewController.pinchGestureRecognizer.state.rawValue >= 2,
+        viewController.pinchGestureRecognizer.scale > 3{
+            self.viewController.translateToDetail()
+             
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? DetailHeaderTableViewCell{
-            print(#function)
+            self.viewController.translateToDetail()
         }
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        print("\(#function) gesture_state=\(pinchGestureRecognizer.state.rawValue)")
-        if fromDismiss{
-            fromDismiss = false
-            return UIScreen.main.bounds.height
-        }
-        if let idx = pinchIdx, indexPath == idx{
-            return CELL_HEIGHT * pinchGestureRecognizer.scale
-        }
-        return CELL_HEIGHT
-    }
-    
+
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerV = UIView.loadFromNibNamed(nibNamed: "ListFooterView") as! ListFooterView
         footerV.dele = self
@@ -146,21 +116,5 @@ extension ListViewController: ListFooterViewDelegate{
     }
     
     
-    
-}
-
-extension ListViewController: UIViewControllerTransitioningDelegate{
-    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return PresentAnimationController(originFrame: orgFrame)
-    }
-    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        print("pinchIdx=\(pinchIdx)")
-//        fromDismiss = true
-//        pinchGestureRecognizer.state = .changed
-//        pinchGestureRecognizer.scale = 5
-//        tableView.reloadData()
-        return DismissAnimationController(destinationFrame: destFrame)
-        
-    }
     
 }
