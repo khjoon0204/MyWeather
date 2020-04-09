@@ -9,7 +9,7 @@
 import Foundation
 
 enum WeatherAPI {
-    case one(lat: String, lon: String)
+    case onecall(lat: String, lon: String)
 }
 
 extension WeatherAPI: EndpointType {
@@ -19,7 +19,7 @@ extension WeatherAPI: EndpointType {
 
     var path: String {
         switch self {
-        case .one(let lat, let lon):
+        case .onecall(let lat, let lon):
             return "/data/2.5/onecall?lat=\(lat)&lon=\(lon)&appid=\(OPENWEATHERMAP_API_KEY)&units=metric&lang=kr"
         }
     }

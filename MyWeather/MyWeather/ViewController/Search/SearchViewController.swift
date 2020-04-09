@@ -11,7 +11,6 @@ import MapKit
 
 class SearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
-    
     @IBOutlet weak var tableView: UITableView!
     
     private var searchCompleter: MKLocalSearchCompleter = MKLocalSearchCompleter()
@@ -30,9 +29,7 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setup()
-//        registerNib()
     }
     
     private func setup() {
@@ -42,38 +39,36 @@ class SearchViewController: UIViewController {
         searchCompleter.delegate = self
     }
     
-//    private func registerNib() {
-//        tableView.register(SearchListTableViewCell.self)
-//    }
-    
     private func updateSearchResults(selected: MKLocalSearchCompletion) {
         let searchRequest = MKLocalSearch.Request(completion: selected)
         let search = MKLocalSearch(request: searchRequest)
         search.start { (response, error) in
-            if error != nil {
-//                print(APIError.requestFailed)
-            }
-            let coordinate = response?.mapItems.first?.placemark.coordinate
-            
-//            NotificationCenter.default.post(name: .selectCity,
-//                                            object: coordinate
-//            )
+            if error != nil {print(error?.localizedDescription)}
+            guard let item = response?.mapItems.first else{return}
+            let coord = item.placemark.coordinate
+            print(coord)
+//            WeatherDataManager.shared.getOnecallWeather(latitude: coord?.latitude, longitude: coord?.longitude, title: item.city, completion: <#T##((Bool) -> Void)?##((Bool) -> Void)?##(Bool) -> Void#>)
             self.dismiss(animated: true, completion: nil)
         }
     }
 }
 
-// MARK: TableView Delegate and DataSource
+extension SearchViewController {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // TODO: - 스크롤방향에 따라 키보드 보이기/감추기
+//        self.view.endEditing(true)
+    }
+}
+
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell: SearchListTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-//        cell.config(data: searchResults[indexPath.row])
-//        return cell
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchTableViewCell", for: indexPath) as? SearchTableViewCell else { return UITableViewCell() }
+        cell.config(data: searchResults[indexPath.row])
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -81,7 +76,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK: SearchBar Delegate
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let searchText = searchBar.text,
@@ -105,20 +99,12 @@ extension SearchViewController: UISearchBarDelegate {
     }
 }
 
-// MARK: ScrollView Delegate
-extension SearchViewController {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.view.endEditing(true)
-    }
-}
-
-// MARK: MKLocalSearchCompleterDelegate
 extension SearchViewController: MKLocalSearchCompleterDelegate {
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         searchResults = completer.results
     }
     
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-//        print(APIError.requestFailed)
+        print(error.localizedDescription)
     }
 }

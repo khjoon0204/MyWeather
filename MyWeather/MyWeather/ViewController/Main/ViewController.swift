@@ -58,7 +58,6 @@ class ViewController: UIViewController {
     }
     
     func translateToList(){
-//        resetGesture()
 
         addV(vc: listVC)
         self.detailC.removeFromParent()

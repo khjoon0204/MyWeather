@@ -43,8 +43,8 @@
                                 </connections>
                             </button>
                             <barButtonItem key="rightBarButtonItem" style="plain" id="Xmf-s0-skR">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SfM-qR-nLk">
-                                    <rect key="frame" x="369" y="10" width="25" height="24"/>
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SfM-qR-nLk">
+                                    <rect key="frame" x="344" y="10" width="50" height="24"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" image="plus.circle" catalog="system"/>

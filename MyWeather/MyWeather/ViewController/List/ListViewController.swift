@@ -13,7 +13,7 @@ class ListViewController: UIViewController {
     
     let CELL_HEIGHT: CGFloat = 100
     
-    var viewController: ViewController{
+    var viewC: ViewController{
         return parent as! ViewController
     }
     
@@ -44,7 +44,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
             
             removeDetailView(indexPath: indexPath, cell: cell)
             addDetailView(indexPath: indexPath, cell: cell)
-            changeHeight(indexPath: indexPath, cell: cell)            
+            changeHeight(indexPath: indexPath, cell: cell)
             transitionDetailView(indexPath: indexPath, cell: cell)
             
 //            print("\(#function) gesture_state=\(pinchGestureRecognizer.state.rawValue)")
@@ -56,16 +56,16 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func changeHeight(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
         if indexPath == pinchIdx{
 //            print(#function)
-            cell.constraintHeight.constant = CELL_HEIGHT * viewController.pinchGestureRecognizer.scale
+            cell.constraintHeight.constant = CELL_HEIGHT * viewC.pinchGestureRecognizer.scale
         }
     }
     
     func addDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
         if indexPath == pinchIdx,
             cell.backV.subviews.count == 0,
-        viewController.pinchGestureRecognizer.scale > 2{
-            cell.backV.addSubview(viewController.detailC.view)
-            viewController.detailC.view.pinEdgesToSuperView()
+        viewC.pinchGestureRecognizer.scale > 2{
+            cell.backV.addSubview(viewC.detailC.view)
+            viewC.detailC.view.pinEdgesToSuperView()
 //            print(viewController.detailC.view.frame)
         }
     }
@@ -73,24 +73,24 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func removeDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
         if indexPath == pinchIdx,
             cell.backV.subviews.count > 0,
-            viewController.pinchGestureRecognizer.scale <= 1{
-            viewController.detailC.view.removeFromSuperview()
+            viewC.pinchGestureRecognizer.scale <= 1{
+            viewC.detailC.view.removeFromSuperview()
         }
     }
     
     func transitionDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
         if indexPath == pinchIdx,
             cell.backV.subviews.count > 0,
-            viewController.pinchGestureRecognizer.state.rawValue >= 2,
-        viewController.pinchGestureRecognizer.scale > 3{
-            self.viewController.translateToDetail()
+            viewC.pinchGestureRecognizer.state.rawValue >= 2,
+        viewC.pinchGestureRecognizer.scale > 3{
+            self.viewC.translateToDetail()
              
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? DetailHeaderTableViewCell{
-            self.viewController.translateToDetail()
+            self.viewC.translateToDetail()
         }
     }
 
@@ -113,6 +113,10 @@ extension ListViewController: ListFooterViewDelegate{
     
     func pressSearch(_ sender: UIButton) {
         print(#function)
+        let searchVC = storyboard?.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
+        present(searchVC, animated: true) {
+            
+        }
     }
     
     

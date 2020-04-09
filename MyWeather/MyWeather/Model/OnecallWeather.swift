@@ -9,8 +9,13 @@
 import Foundation
 
 // MARK: - OneWeather
-class OneWeather: Codable {
+class OnecallWeather: Codable {
+    /// setter
     var seq: Int = -1
+    var title: String = ""
+    var latitude: String = ""
+    var longitude: String = ""
+    
     let lat, lon: Double?
     let timezone: String?
     let current: Current?
