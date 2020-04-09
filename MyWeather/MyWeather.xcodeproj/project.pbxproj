@@ -137,11 +137,11 @@
 		F43F6FB9243AEF94003C7303 /* MyWeather */ = {
 			isa = PBXGroup;
 			children = (
-				F48CC71E243BF95400A49CB6 /* Extension */,
 				F43F6FEB243AFF86003C7303 /* ViewController */,
 				F43F6FE8243AFED0003C7303 /* Model */,
 				F40A7C21243EA08200FDB61A /* ViewModel */,
 				F43F6FE1243AF698003C7303 /* Network */,
+				F48CC71E243BF95400A49CB6 /* Extension */,
 				F43F6FBA243AEF94003C7303 /* AppDelegate.swift */,
 				F43F6FC0243AEF94003C7303 /* Main.storyboard */,
 				F43F6FC3243AEF95003C7303 /* Assets.xcassets */,
@@ -195,17 +195,17 @@
 				F43F6FF9243B3482003C7303 /* Detail */,
 				F43F6FF6243B32E8003C7303 /* List */,
 				F43F6FF3243B1302003C7303 /* Search */,
-				F43F6FF2243B12F7003C7303 /* Main */,
+				F43F6FF2243B12F7003C7303 /* Root */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		F43F6FF2243B12F7003C7303 /* Main */ = {
+		F43F6FF2243B12F7003C7303 /* Root */ = {
 			isa = PBXGroup;
 			children = (
 				F43F6FBE243AEF94003C7303 /* ViewController.swift */,
 			);
-			path = Main;
+			path = Root;
 			sourceTree = "<group>";
 		};
 		F43F6FF3243B1302003C7303 /* Search */ = {

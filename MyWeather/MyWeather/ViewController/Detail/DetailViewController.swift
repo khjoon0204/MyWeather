@@ -13,11 +13,13 @@ class DetailViewController: UIViewController {
     
     enum CellType: Int {
         case weekly = 0
+        case count
     }
     
     enum HeaderType: Int {
         case topHeader = 0
         case hourlyHeader
+        case count
     }
     
     override func viewDidLoad() {
@@ -45,11 +47,11 @@ class DetailViewController: UIViewController {
 extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return HeaderType.count.rawValue
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return CellType.count.rawValue
     }
     
     /// Cell Size

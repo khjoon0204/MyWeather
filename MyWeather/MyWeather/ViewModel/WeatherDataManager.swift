@@ -43,7 +43,8 @@ class WeatherDataManager: NSObject {
         latitude: String, longitude: String,
         title: String,
         completion: ((Bool) -> Void)?){
-        networking.performNetworkTask(endpoint: WeatherAPI.onecall(lat: latitude, lon: longitude), type: OnecallWeather.self) { (response) in
+        
+        networking.performNetworkTask(endpoint: WeatherAPI.onecall(lat: latitude, lon: longitude), type: OnecallWeather.self, completion: { (response) in
             let w: OnecallWeather = response
             w.title = title
             w.latitude = latitude
@@ -51,7 +52,11 @@ class WeatherDataManager: NSObject {
             w.seq = self.ws.count
             self.ws.append(w)
             completion?(true)
+        }) { (errorMessage) in
+            print(errorMessage)
+            completion?(false)
         }
+        
     }
     
     private func parseToWeatherDT(weather w: OnecallWeather) -> WeatherDT{
@@ -67,6 +72,7 @@ class WeatherDataManager: NSObject {
     /// Memory Array -> Local Data
     func saveWeatherArray(){
         let dts = weathers.map{return parseToWeatherDT(weather: $0)}
+        print("saveWeatherArray=\(dts.count)")
         save(dts: dts)
     }
     
@@ -74,18 +80,17 @@ class WeatherDataManager: NSObject {
     let group = DispatchGroup.init()
     let queue = DispatchQueue.global()
     func loadWeatherArray(completion: ((Bool) -> Void)?){
-        guard let dts = load() else { return }
-        queue.async {
-            for d in dts {
-                self.group.enter()
+        guard let dts = load(), dts.count > 0 else { return }
+        for d in dts {
+            group.enter()
+            queue.async {
                 self.getOnecallWeather(latitude: d.latitude, longitude: d.longitude, title: d.title) { (success) in
                     self.group.leave()
                 }
             }
         }
         group.notify(queue: queue) {
-            self.sortBySeq()
-            self.saveWeatherArray()
+            print("group leave done!")
             completion?(true)
         }
     }

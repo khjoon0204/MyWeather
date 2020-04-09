@@ -9,9 +9,15 @@
 import UIKit
 import MapKit
 
+protocol SearchViewControllerDelegate {
+    func mksearchUpdate()
+}
+
 class SearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+    
+    var dele: SearchViewControllerDelegate?
     
     private var searchCompleter: MKLocalSearchCompleter = MKLocalSearchCompleter()
     
@@ -39,7 +45,7 @@ class SearchViewController: UIViewController {
         searchCompleter.delegate = self
     }
     
-    private func updateData(selected: MKLocalSearchCompletion) {
+    private func updateMKSearchResult(selected: MKLocalSearchCompletion) {
         let searchRequest = MKLocalSearch.Request(completion: selected)
         let search = MKLocalSearch(request: searchRequest)
         search.start { (response, error) in
@@ -48,11 +54,10 @@ class SearchViewController: UIViewController {
             let coord = item.placemark.coordinate
 //            print(coord)
             WeatherDataManager.shared.getOnecallWeather(latitude: "\(coord.latitude)", longitude: "\(coord.longitude)", title: item.name ?? "") { (success) in
-                WeatherDataManager.shared.sortBySeq()
+                guard success else{return}
                 WeatherDataManager.shared.saveWeatherArray()
-                DispatchQueue.main.async {
-                    self.dismiss(animated: true, completion: nil)
-                }
+                self.dele?.mksearchUpdate()
+                DispatchQueue.main.async {self.dismiss(animated: true, completion: nil)}
                 
             }
             
@@ -79,7 +84,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        updateData(selected: searchResults[indexPath.row])
+        updateMKSearchResult(selected: searchResults[indexPath.row])
     }
 }
 

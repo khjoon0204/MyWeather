@@ -21,13 +21,17 @@ class ListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        getWeathers()
+        setup()
+    }
+    
+    func getWeathers(){
         WeatherDataManager.shared.loadWeatherArray { (success) in
             DispatchQueue.main.async {
+                WeatherDataManager.shared.sortBySeq()
                 self.tableView.reloadData()
             }
         }
-        setup()
-        
     }
     
     private func setup(){
@@ -52,6 +56,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
             addDetailView(indexPath: indexPath, cell: cell)
             changeHeight(indexPath: indexPath, cell: cell)
             transitionDetailView(indexPath: indexPath, cell: cell)
+            
             
 //            print("\(#function) gesture_state=\(pinchGestureRecognizer.state.rawValue)")
             return cell
@@ -120,11 +125,16 @@ extension ListViewController: ListFooterViewDelegate{
     func pressSearch(_ sender: UIButton) {
         print(#function)
         let searchVC = storyboard?.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
-        present(searchVC, animated: true) {
-            
+        searchVC.dele = self
+        present(searchVC, animated: true) {}
+    }
+}
+
+extension ListViewController: SearchViewControllerDelegate{
+    func mksearchUpdate() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
     }
-    
-    
-    
 }
+

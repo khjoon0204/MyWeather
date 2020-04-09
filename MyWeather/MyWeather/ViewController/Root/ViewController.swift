@@ -53,6 +53,7 @@ class ViewController: UIViewController {
         
         self.detailC.view.removeFromSuperview()
         addV(vc: self.detailC)
+        self.detailC.pageVC.setup()
         
         curPage = .detail
     }
