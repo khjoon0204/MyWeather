@@ -36,10 +36,10 @@
             </objects>
             <point key="canvasLocation" x="132" y="138"/>
         </scene>
-        <!--Detail Page Controller-->
+        <!--Detail Back Controller-->
         <scene sceneID="hN3-Vc-Y3D">
             <objects>
-                <viewController storyboardIdentifier="DetailPageController" id="vez-0C-xzv" customClass="DetailPageController" customModule="MyWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailPageController" id="vez-0C-xzv" customClass="DetailBackController" customModule="MyWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4d4-YG-YmJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -112,7 +112,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" reuseIdentifier="WeeklyCollectionViewCell" translatesAutoresizingMaskIntoConstraints="NO" id="zf6-EV-4po" customClass="WeeklyCollectionViewCell" customModule="MyWeather" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="WeeklyCollectionViewCell" translatesAutoresizingMaskIntoConstraints="NO" id="zf6-EV-4po" customClass="WeeklyCollectionViewCell" customModule="MyWeather" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="800"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="6YC-9f-QmF">
@@ -163,7 +163,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MRP-34-yTJ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MRP-34-yTJ">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <gestureRecognizers/>
@@ -175,6 +175,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="100.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eN2-2m-TuB">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="100.5"/>
+                                                    <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3f4-81-HOz">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="100.5"/>
                                                     <subviews>
@@ -199,16 +203,21 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="eN2-2m-TuB" secondAttribute="trailing" id="1IB-mp-pKR"/>
                                                 <constraint firstItem="3f4-81-HOz" firstAttribute="leading" secondItem="kn0-le-rZV" secondAttribute="leading" id="46g-jl-tuQ"/>
+                                                <constraint firstItem="eN2-2m-TuB" firstAttribute="leading" secondItem="kn0-le-rZV" secondAttribute="leading" id="Frw-cX-Tsk"/>
                                                 <constraint firstAttribute="bottom" secondItem="3f4-81-HOz" secondAttribute="bottom" id="KMF-jK-IZi"/>
+                                                <constraint firstItem="eN2-2m-TuB" firstAttribute="top" secondItem="kn0-le-rZV" secondAttribute="top" id="Wpn-4w-GtH"/>
+                                                <constraint firstAttribute="bottom" secondItem="eN2-2m-TuB" secondAttribute="bottom" id="cnF-cJ-aJZ"/>
                                                 <constraint firstAttribute="trailing" secondItem="3f4-81-HOz" secondAttribute="trailing" id="ph0-R1-VDe"/>
                                                 <constraint firstItem="3f4-81-HOz" firstAttribute="top" secondItem="kn0-le-rZV" secondAttribute="top" id="r4l-lO-f3z"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="backV" destination="3f4-81-HOz" id="N98-Cm-KGp"/>
                                             <outlet property="cityName" destination="lQr-u5-UYp" id="4wr-SE-bll"/>
                                             <outlet property="constraintHeight" destination="6q7-Hf-PIO" id="67d-Ju-foh"/>
+                                            <outlet property="detailV" destination="eN2-2m-TuB" id="R4q-lr-9kM"/>
+                                            <outlet property="nameV" destination="3f4-81-HOz" id="N98-Cm-KGp"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -249,14 +258,14 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchTableViewCell" id="n4f-Ol-c1d" customClass="SearchTableViewCell" customModule="MyWeather" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="41"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="41.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="n4f-Ol-c1d" id="3DE-bp-20z">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sPq-Cr-cCj">
-                                                    <rect key="frame" x="40" y="10" width="42" height="21"/>
+                                                    <rect key="frame" x="40" y="10" width="42" height="21.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>

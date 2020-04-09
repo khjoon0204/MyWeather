@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailPageController: UIViewController {
+class DetailBackController: UIViewController {
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var pageControl: UIPageControl!
@@ -48,8 +48,8 @@ class DetailPageViewController: UIPageViewController, UIPageViewControllerDataSo
     
     var vcs: [DetailViewController] = []
     
-    var parentVC: DetailPageController{
-        return self.parent as! DetailPageController
+    var parentVC: DetailBackController{
+        return self.parent as! DetailBackController
     }
     
     override init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil) {
@@ -65,7 +65,7 @@ class DetailPageViewController: UIPageViewController, UIPageViewControllerDataSo
         setup()
     }
     
-    func setup(){
+    func setup(_ initPageIndex: Int = 0){
         dataSource = self
         delegate = self
         vcs = [] // 초기화
@@ -75,7 +75,8 @@ class DetailPageViewController: UIPageViewController, UIPageViewControllerDataSo
             vcs.append(vc)
         }
         parentVC.pageControl.numberOfPages = vcs.count
-        self.setViewControllers([vcs.first!], direction: .forward, animated: false, completion: nil)
+        parentVC.pageControl.currentPage = initPageIndex
+        self.setViewControllers([vcs[initPageIndex]], direction: .forward, animated: false, completion: nil)
         
     }
     

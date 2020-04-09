@@ -27,6 +27,9 @@ class ListViewController: UIViewController {
     
     func getWeathers(){
         WeatherDataManager.shared.loadWeatherArray { (success) in
+            self.tableView.reloadData()
+        }
+        WeatherDataManager.shared.updateWeatherArray { (success) in
             DispatchQueue.main.async {
                 WeatherDataManager.shared.sortBySeq()
                 self.tableView.reloadData()
@@ -37,12 +40,37 @@ class ListViewController: UIViewController {
     private func setup(){
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.dragInteractionEnabled = true
+        tableView.dragDelegate = self
+        tableView.dropDelegate = self
     }
 }
 
+extension ListViewController: UITableViewDragDelegate, UITableViewDropDelegate{
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return [UIDragItem(itemProvider: NSItemProvider())]
+    }
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {}
+}
 
-// MARK: TableView Delegate and DataSource
 extension ListViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            WeatherDataManager.shared.removeWeather(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            WeatherDataManager.shared.setWeathersSequence()
+            WeatherDataManager.shared.saveWeatherArray()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let movedObject = WeatherDataManager.shared.weathers[sourceIndexPath.row]
+        WeatherDataManager.shared.removeWeather(at: sourceIndexPath.row)
+        WeatherDataManager.shared.insertWeather(weather: movedObject, at: destinationIndexPath.row)
+        WeatherDataManager.shared.setWeathersSequence()
+        WeatherDataManager.shared.saveWeatherArray()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return WeatherDataManager.shared.weathers.count
     }
@@ -56,7 +84,6 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
             addDetailView(indexPath: indexPath, cell: cell)
             changeHeight(indexPath: indexPath, cell: cell)
             transitionDetailView(indexPath: indexPath, cell: cell)
-            
             
 //            print("\(#function) gesture_state=\(pinchGestureRecognizer.state.rawValue)")
             return cell
@@ -73,17 +100,17 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func addDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
         if indexPath == pinchIdx,
-            cell.backV.subviews.count == 0,
-        viewC.pinchGestureRecognizer.scale > 2{
-            cell.backV.addSubview(viewC.detailC.view)
+            cell.detailV.subviews.count == 0,
+            viewC.pinchGestureRecognizer.scale > 2{
+            cell.detailV.addSubview(viewC.detailC.view)
             viewC.detailC.view.pinEdgesToSuperView()
-//            print(viewController.detailC.view.frame)
+            //            print(viewController.detailC.view.frame)
         }
     }
     
     func removeDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
         if indexPath == pinchIdx,
-            cell.backV.subviews.count > 0,
+            cell.detailV.subviews.count > 0,
             viewC.pinchGestureRecognizer.scale <= 1{
             viewC.detailC.view.removeFromSuperview()
         }
@@ -91,17 +118,17 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func transitionDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
         if indexPath == pinchIdx,
-            cell.backV.subviews.count > 0,
+            cell.detailV.subviews.count > 0,
             viewC.pinchGestureRecognizer.state.rawValue >= 2,
         viewC.pinchGestureRecognizer.scale > 3{
-            self.viewC.translateToDetail()
+            self.viewC.translateToDetail(indexPath.row)
              
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (tableView.cellForRow(at: indexPath) as? DetailHeaderTableViewCell) != nil{
-            self.viewC.translateToDetail()
+            self.viewC.translateToDetail(indexPath.row)
         }
     }
 

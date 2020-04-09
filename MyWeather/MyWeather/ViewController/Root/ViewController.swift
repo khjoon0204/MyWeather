@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet var pinchGestureRecognizer: UIPinchGestureRecognizer!
     
     var listVC: ListViewController!
-    var detailC: DetailPageController!
+    var detailC: DetailBackController!
 
     enum CurrentPage {
         case list
@@ -36,7 +36,7 @@ class ViewController: UIViewController {
     private func setupVCs(){
         listVC = storyboard?.instantiateViewController(withIdentifier: "ListViewController") as? ListViewController
         _ = listVC.viewIfLoaded
-        detailC = storyboard?.instantiateViewController(withIdentifier: "DetailPageController") as? DetailPageController
+        detailC = storyboard?.instantiateViewController(withIdentifier: "DetailPageController") as? DetailBackController
         _ = detailC.viewIfLoaded
     }
     
@@ -48,12 +48,12 @@ class ViewController: UIViewController {
     }
     
     // MARK: - Transition
-    func translateToDetail(){
+    func translateToDetail(_ initPageIndex: Int = 0){
         resetGesture()
         
         self.detailC.view.removeFromSuperview()
         addV(vc: self.detailC)
-        self.detailC.pageVC.setup()
+        self.detailC.pageVC.setup(initPageIndex)
         
         curPage = .detail
     }
@@ -80,9 +80,7 @@ class ViewController: UIViewController {
 //        snapshot.transform = CGAffineTransform.init(translationX: 0, y: 300)
         print("Anim_Present snapshotFrame=[\(snapshot.frame)]")
         UIView.animate(withDuration: 3, animations: {
-            
             snapshot.frame = UIScreen.main.bounds
-            
         }) { (complete) in
             snapshot.removeFromSuperview()
             animCompletion()

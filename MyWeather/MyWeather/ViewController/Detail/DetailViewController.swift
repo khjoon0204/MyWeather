@@ -11,6 +11,14 @@ import UIKit
 class DetailViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
+    var parentVC: DetailPageViewController{
+        return self.parent as! DetailPageViewController
+    }
+    
+    lazy var curPage: Int = {
+        return self.parentVC.vcs.firstIndex(of: self)!
+    }()
+    
     enum CellType: Int {
         case weekly = 0
         case count
@@ -26,7 +34,10 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         registerNib()
         setup()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("DetailView curPage=\(curPage)")
     }
     
     private func registerNib(){

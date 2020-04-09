@@ -34,7 +34,7 @@
 		F48CC731243C2CBE00A49CB6 /* TopHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F48CC72F243C2CBE00A49CB6 /* TopHeaderCollectionReusableView.xib */; };
 		F48CC734243C2CD600A49CB6 /* HourlyHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48CC732243C2CD600A49CB6 /* HourlyHeaderCollectionReusableView.swift */; };
 		F48CC735243C2CD600A49CB6 /* HourlyHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F48CC733243C2CD600A49CB6 /* HourlyHeaderCollectionReusableView.xib */; };
-		F48CC737243C3F5D00A49CB6 /* DetailPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48CC736243C3F5D00A49CB6 /* DetailPageController.swift */; };
+		F48CC737243C3F5D00A49CB6 /* DetailBackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48CC736243C3F5D00A49CB6 /* DetailBackController.swift */; };
 		F48CC73C243C4D7500A49CB6 /* DetailHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48CC73B243C4D7500A49CB6 /* DetailHeaderTableViewCell.swift */; };
 		F48CC748243C755000A49CB6 /* ListFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48CC747243C755000A49CB6 /* ListFooterView.swift */; };
 		F48CC74A243C756900A49CB6 /* ListFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F48CC749243C756900A49CB6 /* ListFooterView.xib */; };
@@ -83,7 +83,7 @@
 		F48CC72F243C2CBE00A49CB6 /* TopHeaderCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
 		F48CC732243C2CD600A49CB6 /* HourlyHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		F48CC733243C2CD600A49CB6 /* HourlyHeaderCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HourlyHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
-		F48CC736243C3F5D00A49CB6 /* DetailPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPageController.swift; sourceTree = "<group>"; };
+		F48CC736243C3F5D00A49CB6 /* DetailBackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBackController.swift; sourceTree = "<group>"; };
 		F48CC73B243C4D7500A49CB6 /* DetailHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		F48CC747243C755000A49CB6 /* ListFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFooterView.swift; sourceTree = "<group>"; };
 		F48CC749243C756900A49CB6 /* ListFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListFooterView.xib; sourceTree = "<group>"; };
@@ -234,7 +234,7 @@
 				F48CC721243BFA6B00A49CB6 /* view */,
 				F48CC71D243BF40200A49CB6 /* cell */,
 				F43F6FFA243B3490003C7303 /* DetailViewController.swift */,
-				F48CC736243C3F5D00A49CB6 /* DetailPageController.swift */,
+				F48CC736243C3F5D00A49CB6 /* DetailBackController.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -405,7 +405,7 @@
 				F43F6FFB243B3490003C7303 /* DetailViewController.swift in Sources */,
 				F43F6FFE243B3F2E003C7303 /* WeatherDataManager.swift in Sources */,
 				F43F6FF5243B131E003C7303 /* SearchViewController.swift in Sources */,
-				F48CC737243C3F5D00A49CB6 /* DetailPageController.swift in Sources */,
+				F48CC737243C3F5D00A49CB6 /* DetailBackController.swift in Sources */,
 				F43F6FE7243AFB0D003C7303 /* WeatherAPI.swift in Sources */,
 				F40A7C27243EA6EA00FDB61A /* Double+Extension.swift in Sources */,
 				F43F6FF8243B3322003C7303 /* ListViewController.swift in Sources */,

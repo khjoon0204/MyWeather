@@ -21,7 +21,7 @@ class OnecallWeather: Codable {
     let current: Current?
     let hourly: [Hourly]?
     let daily: [Daily]?
-
+    
     init(lat: Double?, lon: Double?, timezone: String?, current: Current?, hourly: [Hourly]?, daily: [Daily]?) {
         self.lat = lat
         self.lon = lon
@@ -30,6 +30,7 @@ class OnecallWeather: Codable {
         self.hourly = hourly
         self.daily = daily
     }
+    
 }
 
 // MARK: - Current

@@ -10,12 +10,14 @@ import UIKit
 
 class DetailHeaderTableViewCell: UITableViewCell {
     @IBOutlet weak var constraintHeight: NSLayoutConstraint!
-    @IBOutlet weak var backV: UIView!
+    @IBOutlet weak var nameV: UIView!
+    @IBOutlet weak var detailV: UIView!
     @IBOutlet weak var cityName: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
