@@ -7,7 +7,7 @@
 //
 
 /**
- - Data Key for Parsing
+ Data Key for Parsing
  MKSearch - title, latitude, longitude
  OneCall(api) - lat, lon (공통날씨구간. 소숫점두자리내)
  LocalData(WeatherDT) - seq, latitude, longitude, title
@@ -23,8 +23,8 @@ class WeatherDataManager: NSObject {
     
     private let networking = Networking()
     
-    private var ws: [String:OnecallWeather] = [:]
-    public var weathers: [String:OnecallWeather]{ // Key: latitude+longitude
+    private var ws: [OnecallWeather] = []
+    public var weathers: [OnecallWeather]{
         get{return ws}
     }
     
@@ -33,7 +33,7 @@ class WeatherDataManager: NSObject {
         
     }
     
-    /// API -> Memory Dictionary
+    /// API -> Memory Array
     /// - Parameters:
     ///   - latitude: <#latitude description#>
     ///   - longitude: <#longitude description#>
@@ -48,40 +48,45 @@ class WeatherDataManager: NSObject {
             w.title = title
             w.latitude = latitude
             w.longitude = longitude
-            self.ws["\(latitude+longitude)"] = w
+            w.seq = self.ws.count
+            self.ws.append(w)
             completion?(true)
         }
     }
     
-    private func parseToWeatherDT(seq: Int, weather w: OnecallWeather) -> WeatherDT{
-        return WeatherDT(seq: seq, latitude: w.latitude, longitude: w.longitude, title: w.title)
+    private func parseToWeatherDT(weather w: OnecallWeather) -> WeatherDT{
+        return WeatherDT(seq: w.seq!, latitude: w.latitude!, longitude: w.longitude!, title: w.title!)
     }
     
-    /// Memory Dictionary -> Local Data
-    func saveWeatherDictionary(){
-        let dts = weathers.map{ k, v in
-            return parseToWeatherDT(seq: v.seq, weather: v)
-        }
+    func sortBySeq(){
+        ws = ws.sorted(by: { (a, b) -> Bool in
+            a.seq! > b.seq!
+        })
+    }
+    
+    /// Memory Array -> Local Data
+    func saveWeatherArray(){
+        let dts = weathers.map{return parseToWeatherDT(weather: $0)}
         save(dts: dts)
     }
     
-    /// Local Data -> Memory Dictionary
-    func loadWeatherDictionary(){
+    /// Local Data -> Memory Array
+    let group = DispatchGroup.init()
+    let queue = DispatchQueue.global()
+    func loadWeatherArray(completion: ((Bool) -> Void)?){
         guard let dts = load() else { return }
-        let group = DispatchGroup.init()
-        let queue = DispatchQueue.global()
-        group.enter()
         queue.async {
             for d in dts {
+                self.group.enter()
                 self.getOnecallWeather(latitude: d.latitude, longitude: d.longitude, title: d.title) { (success) in
-                    group.leave()
+                    self.group.leave()
                 }
             }
         }
         group.notify(queue: queue) {
-            DispatchQueue.main.async(execute: {
-                self.saveWeatherDictionary()
-            })
+            self.sortBySeq()
+            self.saveWeatherArray()
+            completion?(true)
         }
     }
     

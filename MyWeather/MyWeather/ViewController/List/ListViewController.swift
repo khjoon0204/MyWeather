@@ -21,14 +21,18 @@ class ListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        WeatherDataManager.shared.loadWeatherArray { (success) in
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
         setup()
-
+        
     }
     
     private func setup(){
         tableView.delegate = self
         tableView.dataSource = self
-                
     }
 }
 
@@ -36,11 +40,13 @@ class ListViewController: UIViewController {
 // MARK: TableView Delegate and DataSource
 extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return WeatherDataManager.shared.weathers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "DetailHeaderTableViewCell", for: indexPath) as? DetailHeaderTableViewCell{
+            
+            cell.config(data: WeatherDataManager.shared.weathers[indexPath.row])
             
             removeDetailView(indexPath: indexPath, cell: cell)
             addDetailView(indexPath: indexPath, cell: cell)
@@ -89,7 +95,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) as? DetailHeaderTableViewCell{
+        if (tableView.cellForRow(at: indexPath) as? DetailHeaderTableViewCell) != nil{
             self.viewC.translateToDetail()
         }
     }

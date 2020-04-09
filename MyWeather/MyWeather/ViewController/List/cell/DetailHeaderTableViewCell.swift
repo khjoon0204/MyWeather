@@ -11,6 +11,7 @@ import UIKit
 class DetailHeaderTableViewCell: UITableViewCell {
     @IBOutlet weak var constraintHeight: NSLayoutConstraint!
     @IBOutlet weak var backV: UIView!
+    @IBOutlet weak var cityName: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,4 +24,8 @@ class DetailHeaderTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    func config(data w: OnecallWeather){
+        cityName.text = w.title
+    }
+    
 }

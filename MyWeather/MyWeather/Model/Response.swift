@@ -22,6 +22,7 @@ extension Response {
             let response = try jsonDecoder.decode(T.self, from: data)
             return response
         } catch let error {
+            print(error.localizedDescription)
             return nil
         }
     }

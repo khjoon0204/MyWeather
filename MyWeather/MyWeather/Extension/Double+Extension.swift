@@ -11,19 +11,20 @@ import Foundation
 //MARK: Extension+Double
 extension Double {
     // kelvin to celsius
-    func makeCelsius() -> String {
-        let argue = self - 273.15
-        return String(format: "%.0f", arguments: [argue])
+    func toCelsius() -> String {
+        let arg = self - 273.15
+        return String(format: "%.0f", arguments: [arg])
     }
     
     // kelvin to fahrenheit
-    func makeFahrenheit() -> String {
-        let argue = (self * 9/5) - 459.67
-        return String(format: "%.0f", arguments: [argue])
+    func toFahrenheit() -> String {
+        let arg = (self * 9/5) - 459.67
+        return String(format: "%.0f", arguments: [arg])
     }
     
-    // rounding double to 2 decimal place
-    func makeRound() -> Double {
-        return (self * 100).rounded() / 100
-    }
+//    // rounding double to 2 decimal place
+//    func makeRound() -> Double {
+//        return (self * 100).rounded() / 100
+//    }
+    
 }
