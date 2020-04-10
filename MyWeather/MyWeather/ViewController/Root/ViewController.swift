@@ -53,7 +53,7 @@ class ViewController: UIViewController {
         
         self.detailC.view.removeFromSuperview()
         addV(vc: self.detailC)
-        self.detailC.pageVC.setup(initPageIndex)
+        self.detailC.setupPageViewController(initPageIndex)
         
         curPage = .detail
     }
@@ -72,27 +72,11 @@ class ViewController: UIViewController {
     }
     
     // MARK: - Function
-    private func showDetailAnim(orgFrame: CGRect, dest: UIView, animCompletion: @escaping () -> Void){
-        guard let snapshot = dest.snapshotView(afterScreenUpdates: true) else { return }
-        snapshot.contentMode = .top
-        snapshot.frame = orgFrame
-        view.addSubview(snapshot)
-//        snapshot.transform = CGAffineTransform.init(translationX: 0, y: 300)
-        print("Anim_Present snapshotFrame=[\(snapshot.frame)]")
-        UIView.animate(withDuration: 3, animations: {
-            snapshot.frame = UIScreen.main.bounds
-        }) { (complete) in
-            snapshot.removeFromSuperview()
-            animCompletion()
-        }
-    }
-    
     @IBAction func pinch(_ sender: UIPinchGestureRecognizer) {
-        print("\(#function) currentPage=\(currentPage) scale=\(pinchGestureRecognizer.scale) gesture_state=\(pinchGestureRecognizer.state.rawValue)")
+        print("\(#function) currentPage=\(currentPage) scale=\(pinchGestureRecognizer.scale.rounded()) gesture_state=\(pinchGestureRecognizer.state.rawValue)")
         if currentPage == .list{
             let touch = sender.location(in: listVC.tableView)
             if let indexPath = listVC.tableView.indexPathForRow(at: touch) {
-                //            print("indexPath=\(indexPath) scale=\(sender.scale) state=\(sender.state.rawValue)")
                 listVC.pinchIdx = indexPath
                 listVC.tableView.reloadData()
             }
@@ -101,7 +85,6 @@ class ViewController: UIViewController {
             pinchGestureRecognizer.scale = 3
             translateToList()
         }
-        
     }
     
     

@@ -9,6 +9,10 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    let TOP_HEADER_HEIGHT: CGFloat = 200
+    let HOURLY_HEADER_HEIGHT: CGFloat = 75
+    let WEEKLY_HEIGHT: CGFloat = 800
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     var parentVC: DetailPageViewController{
@@ -72,7 +76,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
     ///   - indexPath: <#indexPath description#>
     /// - Returns: <#description#>
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.view.bounds.width, height: 800)
+        return CGSize(width: self.view.bounds.width, height: WEEKLY_HEIGHT)
     }
     
     /// Header Size
@@ -85,9 +89,9 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         let headerType = HeaderType(rawValue: section)
         switch headerType {
         case .topHeader:
-            return CGSize(width: self.view.bounds.width, height: 200)
+            return CGSize(width: self.view.bounds.width, height: TOP_HEADER_HEIGHT)
         case .hourlyHeader:
-            return CGSize(width: self.view.bounds.width, height: 75)
+            return CGSize(width: self.view.bounds.width, height: HOURLY_HEADER_HEIGHT)
         default: break
         }
         return .zero

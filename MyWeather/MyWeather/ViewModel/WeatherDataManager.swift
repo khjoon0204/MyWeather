@@ -129,7 +129,7 @@ class WeatherDataManager: NSObject {
     }
     
     private func parseToOnecallWeather(d: WeatherDT) -> OnecallWeather{
-        let ow = OnecallWeather(lat: nil, lon: nil, timezone: nil, current: nil, hourly: nil, daily: nil)
+        let ow = OnecallWeather(lat: nil, lon: nil, timezone: nil, current: nil, hourly: nil, daily: nil)        
         ow.title = d.title
         ow.latitude = d.latitude
         ow.longitude = d.longitude

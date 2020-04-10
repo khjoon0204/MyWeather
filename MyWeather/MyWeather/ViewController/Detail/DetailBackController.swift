@@ -31,16 +31,22 @@ class DetailBackController: UIViewController {
         pageVC.view.pinEdgesToSuperView()
     }
     
-    func selectPage(page: Int){
-        pageControl.currentPage = page
-    }
-    
     @IBAction func pressWeb(_ sender: UIBarButtonItem) {
     }
     
     @IBAction func pressList(_ sender: Any) {
         viewController.translateToList()
     }
+    
+    // MARK:- public
+    func selectPage(page: Int){
+        pageControl.currentPage = page
+    }
+    
+    func setupPageViewController(_ initPageIndex: Int = 0){
+        pageVC.setup(initPageIndex)
+    }
+    
     
 }
 
@@ -65,7 +71,7 @@ class DetailPageViewController: UIPageViewController, UIPageViewControllerDataSo
         setup()
     }
     
-    func setup(_ initPageIndex: Int = 0){
+    fileprivate func setup(_ initPageIndex: Int = 0){
         dataSource = self
         delegate = self
         vcs = [] // 초기화

@@ -30,7 +30,7 @@ struct Networking {
             }
             let response = Response(data: data)
             guard let decoded = response.decode(type) else {
-                failure?("디코드에 실패했습니다")
+                failure?("디코드에 실패했습니다 \(urlString)")
                 return
             }
             completion?(decoded)

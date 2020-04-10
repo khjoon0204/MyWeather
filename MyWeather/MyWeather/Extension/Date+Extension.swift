@@ -14,13 +14,13 @@ extension Date {
     }
     
     func dayNumberOfWeek(time: Int) -> Int? {
-        guard let timeZone = TimeZone(abbreviation: calcuateGMT(time: time)) else {
+        guard let timeZone = TimeZone(abbreviation: calculateGMT(time: time)) else {
             return 0
         }
         return Calendar.current.dateComponents(in: timeZone, from: self).weekday
     }
     
-    func calcuateGMT(time: Int) -> String {
+    func calculateGMT(time: Int) -> String {
         let timeZone = abs(time) / 3600
         let compare = time < 0 ? "-" : "+" 
 
@@ -34,8 +34,7 @@ extension Date {
     func getCountryTime(byTimeZone time: Int) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm a"
-        formatter.timeZone = TimeZone(abbreviation: calcuateGMT(time: time))
-        let defaultTimeZoneStr = formatter.string(from: self)
-        return defaultTimeZoneStr
+        formatter.timeZone = TimeZone(abbreviation: calculateGMT(time: time))        
+        return formatter.string(from: self)
     }
 }

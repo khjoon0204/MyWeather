@@ -22,9 +22,9 @@ extension Double {
         return String(format: "%.0f", arguments: [arg])
     }
     
-//    // rounding double to 2 decimal place
-//    func makeRound() -> Double {
-//        return (self * 100).rounded() / 100
-//    }
+    // rounding double to 2 decimal place
+    func round2Decimal() -> Double {
+        return (self * 100).rounded() / 100
+    }
     
 }
