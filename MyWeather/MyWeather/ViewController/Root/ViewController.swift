@@ -71,13 +71,15 @@ class ViewController: UIViewController {
     @IBAction func pinch(_ sender: UIPinchGestureRecognizer) {
         
         if currentPage == .list{
+            guard !listVC.isTransDetail else{return}
             let touch = sender.location(in: listVC.tableView)
             if let indexPath = listVC.tableView.indexPathForRow(at: touch) {
-                if listVC.pinchIdx == nil{listVC.pinchIdx = indexPath}
+                if listVC.touchTableIdx == nil{listVC.touchTableIdx = indexPath}
 //                print("\(#function) currentPage=\(currentPage) scale=\(pinchGestureRecognizer.scale.rounded()) gesture_state=\(pinchGestureRecognizer.state.rawValue) pinchIdx=\(indexPath)")
                 listVC.tableView.reloadData()
-                if pinchGestureRecognizer.state.rawValue >= 3{
-                    listVC.pinchIdx = nil
+                if pinchGestureRecognizer.state.rawValue >= 3
+                {
+                    listVC.touchTableIdx = nil
                     print("pinchIdx 초기화!")
                 }
             }

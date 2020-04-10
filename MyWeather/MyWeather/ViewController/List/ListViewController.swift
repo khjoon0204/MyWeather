@@ -20,7 +20,7 @@ class ListViewController: UIViewController {
         return parent as! ViewController
     }
     
-    var pinchIdx: IndexPath?
+    var touchTableIdx: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,7 +89,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func changeHeight(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
-        if indexPath == pinchIdx{
+        if indexPath == touchTableIdx{
             //            print("changeHeight index=\(indexPath)")
             cell.constraintHeight.constant = CELL_HEIGHT * viewC.pinchGestureRecognizer.scale
         }
@@ -97,28 +97,32 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func addDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
-        if indexPath == pinchIdx,
+        if indexPath == touchTableIdx,
             cell.constraintHeight.constant > CELL_HEIGHT,
             viewC.pinchGestureRecognizer.scale > PINCH_SCALE_ADD_DETAIL,
             viewC.pinchGestureRecognizer.scale < PINCH_SCALE_TRANS_DETAIL,
             cell.detailV.subviews.count <= 0
         {
             print("addDetailView indexPath=\(indexPath)")
-            if let snap = viewC.detailC.view.snapshotView(afterScreenUpdates: true){
-                snap.contentMode = .top
-                cell.detailV.addSubview(snap)
-                snap.pinEdgesToSuperView()
-            }
+            addDetailSnapshot(cell: cell)
         }
-        else if indexPath != pinchIdx{
-            print("removeDetailView indexPath=\(indexPath)")
+        else if indexPath != touchTableIdx{
+//            print("removeDetailView indexPath=\(indexPath)")
             cell.detailV.subviews.map{$0.removeFromSuperview()}
         }
     }
     
+    func addDetailSnapshot(cell: DetailHeaderTableViewCell){
+        guard cell.detailV.subviews.count <= 0 else{return}
+        if let snap = viewC.detailC.view.snapshotView(afterScreenUpdates: true){
+            snap.contentMode = .top
+            cell.detailV.addSubview(snap)
+            snap.pinEdgesToSuperView()
+        }
+    }
     
     func transDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
-        if indexPath == pinchIdx,
+        if indexPath == touchTableIdx,
             viewC.pinchGestureRecognizer.state.rawValue >= 2,
             viewC.pinchGestureRecognizer.scale > PINCH_SCALE_TRANS_DETAIL,
             !isTransDetail,
@@ -126,6 +130,8 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         {
             isTransDetail = true
             print(#function)
+//            viewC.resetPinchGesture()
+            
             DispatchQueue.main.async {
                 self.tableView(self.tableView, didSelectRowAt: indexPath)
             }
@@ -136,72 +142,24 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? DetailHeaderTableViewCell{
             print("\(#function) indexPath=\(indexPath)")
-            let idxPath = pinchIdx ?? indexPath
+            let idxPath = touchTableIdx ?? indexPath
+            addDetailSnapshot(cell: cell)
             
-            
-            
-            cell.constraintHeight.constant = UIScreen.main.bounds.height
-            tableView.beginUpdates()
-            self.view.layoutIfNeeded()
-            tableView.endUpdates()
-//            tableView.scrollToRow(at: idxPath, at: .top, animated: true)
-            print("translateToDetail animation done!")
-                
-            
-            
-            
-//            cell.constraintHeight.constant = UIScreen.main.bounds.height
-//            UIView.animate(withDuration: 3, delay: 0, options: .curveEaseIn, animations: {
-//                self.view.layoutIfNeeded()
-//                tableView.beginUpdates()
-//                tableView.endUpdates()
-//            }) { (complete) in
-//                print("translateToDetail animation done!")
-////                self.viewC.translateToDetail(indexPath.row)
-//                self.isTransDetail = false
-//            }
-            
-            
-            
-            
-//            CAAnimation(duration: 3, animation: {
-//                tableView.scrollToRow(at: idxPath, at: .top, animated: true)
-//                cell.constraintHeight.constant = UIScreen.main.bounds.height
-//                UIView.animate(withDuration: 3, delay: 0, options: .curveEaseIn, animations: {
-//                    self.view.layoutIfNeeded()
-//                    tableView.beginUpdates()
-//                    tableView.endUpdates()
-//                }) { (complete) in
-//                    print("translateToDetail animation done!")
-////                    self.viewC.translateToDetail(indexPath.row)
-////                    self.isTransDetail = false
-//                }
-//
-//            }) {
-//                print("CAAnimation complete!")
-//
-//                self.isTransDetail = false
-//            }
-            
-            
-            
-            
-//            CAAnimation(duration: 3, animation: {
-//                cell.constraintHeight.constant = UIScreen.main.bounds.height
-//                UIView.animate(withDuration: 3, animations: {
-//                    self.view.layoutIfNeeded()
-//                    tableView.beginUpdates()
-//                    tableView.endUpdates()
-//                }) { (complete) in
-//                    print("animation complete!")
-////                    self.viewC.translateToDetail(indexPath.row)
-//                    self.isTransDetail = false
-//                }
-//            }) {
-//                print("CAAnimation complete!")
-//            }
-            
-            
+            CAAnimation(duration: 1, animation: {
+                cell.constraintHeight.constant = UIScreen.main.bounds.height
+                UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn, animations: {
+                    tableView.beginUpdates()
+                    tableView.endUpdates()
+                }) { (complete) in
+                    print("animation done!")
+                }
+                tableView.scrollToRow(at: idxPath, at: .top, animated: true)
+            }) {
+                print("CAAnimation complete!")
+                self.viewC.translateToDetail(indexPath.row)
+                self.isTransDetail = false
+                self.tableView.reloadData()
+            }
             
         }        
     }
