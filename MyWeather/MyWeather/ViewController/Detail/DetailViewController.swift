@@ -9,9 +9,9 @@
 import UIKit
 
 class DetailViewController: UIViewController {
-    let TOP_HEADER_HEIGHT: CGFloat = 200
-    let HOURLY_HEADER_HEIGHT: CGFloat = 75
-    let WEEKLY_HEIGHT: CGFloat = 800
+    final let TOP_HEADER_HEIGHT: CGFloat = 200
+    final let HOURLY_HEADER_HEIGHT: CGFloat = 75
+    final let WEEKLY_HEIGHT: CGFloat = 800
     
     @IBOutlet weak var collectionView: UICollectionView!
     

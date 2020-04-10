@@ -69,27 +69,33 @@ class ViewController: UIViewController {
     
     // MARK: - Function
     @IBAction func pinch(_ sender: UIPinchGestureRecognizer) {
-        
+        tmpPinchScale = sender.scale
+//        print("\(#function) page=\(currentPage) scale=\(pinchGestureRecognizer.scale.rounded()) state=\(pinchGestureRecognizer.state.rawValue)")
         if currentPage == .list{
-            guard !listVC.isTransDetail else{return}
+            guard !listVC.isTranslating else{return}
             let touch = sender.location(in: listVC.tableView)
             if let indexPath = listVC.tableView.indexPathForRow(at: touch) {
-                if listVC.touchTableIdx == nil{listVC.touchTableIdx = indexPath}
-//                print("\(#function) currentPage=\(currentPage) scale=\(pinchGestureRecognizer.scale.rounded()) gesture_state=\(pinchGestureRecognizer.state.rawValue) pinchIdx=\(indexPath)")
+                if listVC.touchIndex == nil{listVC.touchIndex = indexPath}
                 listVC.tableView.reloadData()
                 if pinchGestureRecognizer.state.rawValue >= 3
                 {
-                    listVC.touchTableIdx = nil
+                    listVC.touchIndex = nil
                     print("pinchIdx 초기화!")
                 }
             }
         }
         else if currentPage == .detail{
-            pinchGestureRecognizer.scale = 3
             translateToList()
+            listVC.listFromDetail(index: detailC.getPageIndex())
         }
     }
     
+    private var tmpPinchScale: CGFloat = 1.0{
+        didSet{
+            isPinchZoomIn = (oldValue < tmpPinchScale)
+        }
+    }
+    var isPinchZoomIn: Bool = false
     
 }
 

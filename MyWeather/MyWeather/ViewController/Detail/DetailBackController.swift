@@ -39,12 +39,12 @@ class DetailBackController: UIViewController {
     }
     
     // MARK:- public
-    func selectPage(page: Int){
-        pageControl.currentPage = page
-    }
-    
     func setupPageViewController(_ initPageIndex: Int = 0){
         pageVC.setup(initPageIndex)
+    }
+    
+    func getPageIndex() -> Int{
+        return pageControl.currentPage
     }
     
     

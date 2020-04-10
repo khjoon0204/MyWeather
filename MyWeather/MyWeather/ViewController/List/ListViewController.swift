@@ -9,10 +9,10 @@
 import UIKit
 
 class ListViewController: UIViewController {
-    let CELL_HEIGHT: CGFloat = 100
-    let PINCH_SCALE_ADD_DETAIL: CGFloat = 2
-    let PINCH_SCALE_REMOVE_DETAIL: CGFloat = 1
-    let PINCH_SCALE_TRANS_DETAIL: CGFloat = 2.5
+    final let CELL_HEIGHT: CGFloat = 100
+    final let PINCH_SCALE_ADD_DETAIL: CGFloat = 2
+    final let PINCH_SCALE_REMOVE_DETAIL: CGFloat = 1
+    final let PINCH_SCALE_TRANSLATE: CGFloat = 3
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -20,7 +20,7 @@ class ListViewController: UIViewController {
         return parent as! ViewController
     }
     
-    var touchTableIdx: IndexPath?
+    var touchIndex: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,7 @@ class ListViewController: UIViewController {
         WeatherDataManager.shared.loadWeatherArray { (success) in
             self.tableView.reloadData()
         }
-        
+        // 임시: - 하루API 조회 제한
 //        WeatherDataManager.shared.updateWeatherArray { (success) in
 //            DispatchQueue.main.async {
 //                WeatherDataManager.shared.sortBySeq()
@@ -50,29 +50,17 @@ class ListViewController: UIViewController {
     }
     
     // MARK:- public
-    func showDetailAnim(orgFrame: CGRect, dest: UIView, animCompletion: @escaping () -> Void){
-        guard let snapshot = dest.snapshotView(afterScreenUpdates: true) else { return }
-        snapshot.contentMode = .top
-        snapshot.frame = orgFrame
-        view.addSubview(snapshot)
-        //        snapshot.transform = CGAffineTransform.init(translationX: 0, y: 300)
-        print("Anim_Present snapshotFrame=[\(snapshot.frame)]")
-        UIView.animate(withDuration: 3, animations: {
-            snapshot.frame = UIScreen.main.bounds
-        }) { (complete) in
-            snapshot.removeFromSuperview()
-            animCompletion()
-        }
-    }
+    var isTranslating = false
     
-    var isTransDetail = false
-}
-
-extension ListViewController: UITableViewDragDelegate, UITableViewDropDelegate{
-    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        return [UIDragItem(itemProvider: NSItemProvider())]
+    func listFromDetail(index i: Int){
+        let idxPath = IndexPath(row: i, section: 0)
+        touchIndex = idxPath
+        
+        viewC.pinchGestureRecognizer.scale = UIScreen.main.bounds.height / CELL_HEIGHT
+        tableView.reloadData()
+        tableView.scrollToRow(at: idxPath, at: .middle, animated: false)
     }
-    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {}
+   
 }
 
 extension ListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -89,30 +77,30 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func changeHeight(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
-        if indexPath == touchTableIdx{
-            //            print("changeHeight index=\(indexPath)")
-            cell.constraintHeight.constant = CELL_HEIGHT * viewC.pinchGestureRecognizer.scale
+        if indexPath == touchIndex{
+//            print("changeHeight index=\(indexPath) scale=\(viewC.pinchGestureRecognizer.scale.rounded())")
+            cell.constraintHeight.constant = CELL_HEIGHT * max(viewC.pinchGestureRecognizer.scale, 1.0)
         }
         else{ cell.constraintHeight.constant = CELL_HEIGHT }
     }
     
     func addDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
-        if indexPath == touchTableIdx,
+        if indexPath == touchIndex,
             cell.constraintHeight.constant > CELL_HEIGHT,
             viewC.pinchGestureRecognizer.scale > PINCH_SCALE_ADD_DETAIL,
-            viewC.pinchGestureRecognizer.scale < PINCH_SCALE_TRANS_DETAIL,
+//            viewC.pinchGestureRecognizer.scale < PINCH_SCALE_TRANSLATE,
             cell.detailV.subviews.count <= 0
         {
             print("addDetailView indexPath=\(indexPath)")
             addDetailSnapshot(cell: cell)
         }
-        else if indexPath != touchTableIdx{
+        else if indexPath != touchIndex{
 //            print("removeDetailView indexPath=\(indexPath)")
             cell.detailV.subviews.map{$0.removeFromSuperview()}
         }
     }
     
-    func addDetailSnapshot(cell: DetailHeaderTableViewCell){
+    private func addDetailSnapshot(cell: DetailHeaderTableViewCell){
         guard cell.detailV.subviews.count <= 0 else{return}
         if let snap = viewC.detailC.view.snapshotView(afterScreenUpdates: true){
             snap.contentMode = .top
@@ -122,16 +110,15 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func transDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
-        if indexPath == touchTableIdx,
+        if indexPath == touchIndex,
+            viewC.isPinchZoomIn,
             viewC.pinchGestureRecognizer.state.rawValue >= 2,
-            viewC.pinchGestureRecognizer.scale > PINCH_SCALE_TRANS_DETAIL,
-            !isTransDetail,
+            viewC.pinchGestureRecognizer.scale > PINCH_SCALE_TRANSLATE,
+            !isTranslating,
             cell.detailV.subviews.count > 0
         {
-            isTransDetail = true
+            isTranslating = true
             print(#function)
-//            viewC.resetPinchGesture()
-            
             DispatchQueue.main.async {
                 self.tableView(self.tableView, didSelectRowAt: indexPath)
             }
@@ -140,27 +127,26 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) as? DetailHeaderTableViewCell{
+        if let cell = tableView.cellForRow(at: indexPath) as? DetailHeaderTableViewCell {
             print("\(#function) indexPath=\(indexPath)")
-            let idxPath = touchTableIdx ?? indexPath
+            let idxPath = touchIndex ?? indexPath
             addDetailSnapshot(cell: cell)
             
             CAAnimation(duration: 1, animation: {
                 cell.constraintHeight.constant = UIScreen.main.bounds.height
                 UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn, animations: {
-                    tableView.beginUpdates()
-                    tableView.endUpdates()
+                    self.tableView.beginUpdates()
+                    self.tableView.endUpdates()
                 }) { (complete) in
-                    print("animation done!")
+                    //                    print("animation done!")
                 }
                 tableView.scrollToRow(at: idxPath, at: .top, animated: true)
             }) {
-                print("CAAnimation complete!")
-                self.viewC.translateToDetail(indexPath.row)
-                self.isTransDetail = false
+                //                print("CAAnimation complete!")
+                self.viewC.translateToDetail(idxPath.row)
+                self.isTranslating = false
                 self.tableView.reloadData()
             }
-            
         }        
     }
     
@@ -192,6 +178,13 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         return footerV
     }
     
+}
+
+extension ListViewController: UITableViewDragDelegate, UITableViewDropDelegate{
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return [UIDragItem(itemProvider: NSItemProvider())]
+    }
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {}
 }
 
 extension ListViewController: ListFooterViewDelegate{
