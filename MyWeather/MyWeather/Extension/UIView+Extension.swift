@@ -12,12 +12,12 @@ import UIKit
 extension UIView{
     
     /// 부모뷰 프레임에 맞추기. 동적 Autolayout
-    func pinEdgesToSuperView(activeBottomAnchor: Bool = true) {
+    func pinEdgesToSuperView() {
         guard let superView = superview else { return }
         translatesAutoresizingMaskIntoConstraints = false
         topAnchor.constraint(equalTo: superView.topAnchor).isActive = true
         leftAnchor.constraint(equalTo: superView.leftAnchor).isActive = true
-        if activeBottomAnchor{bottomAnchor.constraint(equalTo: superView.bottomAnchor).isActive = true}        
+        bottomAnchor.constraint(equalTo: superView.bottomAnchor).isActive = true
         rightAnchor.constraint(equalTo: superView.rightAnchor).isActive = true
     }
     

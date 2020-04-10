@@ -41,7 +41,7 @@ class DetailViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("DetailView curPage=\(curPage)")
+//        print("DetailView curPage=\(curPage)")
     }
     
     private func registerNib(){

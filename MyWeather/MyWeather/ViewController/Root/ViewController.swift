@@ -49,36 +49,37 @@ class ViewController: UIViewController {
     
     // MARK: - Transition
     func translateToDetail(_ initPageIndex: Int = 0){
-        resetGesture()
-        
+        resetPinchGesture()
         self.detailC.view.removeFromSuperview()
         addV(vc: self.detailC)
         self.detailC.setupPageViewController(initPageIndex)
-        
         curPage = .detail
     }
     
     func translateToList(){
-
         addV(vc: listVC)
         self.detailC.removeFromParent()
-        
         curPage = .list
     }
     
-    private func resetGesture(){
+    func resetPinchGesture(){
         pinchGestureRecognizer.isEnabled = false
         pinchGestureRecognizer.isEnabled = true
     }
     
     // MARK: - Function
     @IBAction func pinch(_ sender: UIPinchGestureRecognizer) {
-        print("\(#function) currentPage=\(currentPage) scale=\(pinchGestureRecognizer.scale.rounded()) gesture_state=\(pinchGestureRecognizer.state.rawValue)")
+        
         if currentPage == .list{
             let touch = sender.location(in: listVC.tableView)
             if let indexPath = listVC.tableView.indexPathForRow(at: touch) {
-                listVC.pinchIdx = indexPath
+                if listVC.pinchIdx == nil{listVC.pinchIdx = indexPath}
+//                print("\(#function) currentPage=\(currentPage) scale=\(pinchGestureRecognizer.scale.rounded()) gesture_state=\(pinchGestureRecognizer.state.rawValue) pinchIdx=\(indexPath)")
                 listVC.tableView.reloadData()
+                if pinchGestureRecognizer.state.rawValue >= 3{
+                    listVC.pinchIdx = nil
+                    print("pinchIdx 초기화!")
+                }
             }
         }
         else if currentPage == .detail{

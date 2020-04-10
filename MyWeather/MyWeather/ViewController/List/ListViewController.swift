@@ -10,9 +10,9 @@ import UIKit
 
 class ListViewController: UIViewController {
     let CELL_HEIGHT: CGFloat = 100
-    let PINCH_SCALE_ADD_DETAILVIEW: CGFloat = 2
-    let PINCH_SCALE_REMOVE_DETAILVIEW: CGFloat = 1
-    let PINCH_SCALE_TRANS_DETAILVIEW: CGFloat = 3.5
+    let PINCH_SCALE_ADD_DETAIL: CGFloat = 2
+    let PINCH_SCALE_REMOVE_DETAIL: CGFloat = 1
+    let PINCH_SCALE_TRANS_DETAIL: CGFloat = 2.5
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -20,7 +20,7 @@ class ListViewController: UIViewController {
         return parent as! ViewController
     }
     
-    var pinchIdx = IndexPath()
+    var pinchIdx: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,12 +33,12 @@ class ListViewController: UIViewController {
             self.tableView.reloadData()
         }
         
-        WeatherDataManager.shared.updateWeatherArray { (success) in
-            DispatchQueue.main.async {
-                WeatherDataManager.shared.sortBySeq()
-                self.tableView.reloadData()
-            }
-        }
+//        WeatherDataManager.shared.updateWeatherArray { (success) in
+//            DispatchQueue.main.async {
+//                WeatherDataManager.shared.sortBySeq()
+//                self.tableView.reloadData()
+//            }
+//        }
     }
     
     private func setup(){
@@ -65,7 +65,7 @@ class ListViewController: UIViewController {
         }
     }
     
-    
+    var isTransDetail = false
 }
 
 extension ListViewController: UITableViewDragDelegate, UITableViewDropDelegate{
@@ -79,15 +79,10 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     // MARK: - UITableView Cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "DetailHeaderTableViewCell", for: indexPath) as? DetailHeaderTableViewCell{
-            
             cell.config(data: WeatherDataManager.shared.weathers[indexPath.row])
-            
-            removeDetailView(indexPath: indexPath, cell: cell)
+            transDetailView(indexPath: indexPath, cell: cell)
             addDetailView(indexPath: indexPath, cell: cell)
             changeHeight(indexPath: indexPath, cell: cell)
-            transDetailView(indexPath: indexPath, cell: cell)
-            
-            //            print("\(#function) gesture_state=\(pinchGestureRecognizer.state.rawValue)")
             return cell
         }
         return UITableViewCell()
@@ -95,36 +90,120 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func changeHeight(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
         if indexPath == pinchIdx{
-            //            print(#function)
+            //            print("changeHeight index=\(indexPath)")
             cell.constraintHeight.constant = CELL_HEIGHT * viewC.pinchGestureRecognizer.scale
         }
+        else{ cell.constraintHeight.constant = CELL_HEIGHT }
     }
     
     func addDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
         if indexPath == pinchIdx,
-            cell.detailV.subviews.count == 0,
-            viewC.pinchGestureRecognizer.scale > PINCH_SCALE_ADD_DETAILVIEW{
-            cell.detailV.addSubview(viewC.detailC.view)
-            viewC.detailC.view.pinEdgesToSuperView()
-            //            print(viewController.detailC.view.frame)
+            cell.constraintHeight.constant > CELL_HEIGHT,
+            viewC.pinchGestureRecognizer.scale > PINCH_SCALE_ADD_DETAIL,
+            viewC.pinchGestureRecognizer.scale < PINCH_SCALE_TRANS_DETAIL,
+            cell.detailV.subviews.count <= 0
+        {
+            print("addDetailView indexPath=\(indexPath)")
+            if let snap = viewC.detailC.view.snapshotView(afterScreenUpdates: true){
+                snap.contentMode = .top
+                cell.detailV.addSubview(snap)
+                snap.pinEdgesToSuperView()
+            }
+        }
+        else if indexPath != pinchIdx{
+            print("removeDetailView indexPath=\(indexPath)")
+            cell.detailV.subviews.map{$0.removeFromSuperview()}
         }
     }
     
-    func removeDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
-        if indexPath == pinchIdx,
-            cell.detailV.subviews.count > 0,
-            viewC.pinchGestureRecognizer.scale <= PINCH_SCALE_REMOVE_DETAILVIEW{
-            viewC.detailC.view.removeFromSuperview()
-        }
-    }
     
     func transDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
         if indexPath == pinchIdx,
-            cell.detailV.subviews.count > 0,
             viewC.pinchGestureRecognizer.state.rawValue >= 2,
-            viewC.pinchGestureRecognizer.scale > PINCH_SCALE_TRANS_DETAILVIEW{
-            self.viewC.translateToDetail(indexPath.row)
+            viewC.pinchGestureRecognizer.scale > PINCH_SCALE_TRANS_DETAIL,
+            !isTransDetail,
+            cell.detailV.subviews.count > 0
+        {
+            isTransDetail = true
+            print(#function)
+            DispatchQueue.main.async {
+                self.tableView(self.tableView, didSelectRowAt: indexPath)
+            }
+            
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? DetailHeaderTableViewCell{
+            print("\(#function) indexPath=\(indexPath)")
+            let idxPath = pinchIdx ?? indexPath
+            
+            
+            
+            cell.constraintHeight.constant = UIScreen.main.bounds.height
+            tableView.beginUpdates()
+            self.view.layoutIfNeeded()
+            tableView.endUpdates()
+//            tableView.scrollToRow(at: idxPath, at: .top, animated: true)
+            print("translateToDetail animation done!")
+                
+            
+            
+            
+//            cell.constraintHeight.constant = UIScreen.main.bounds.height
+//            UIView.animate(withDuration: 3, delay: 0, options: .curveEaseIn, animations: {
+//                self.view.layoutIfNeeded()
+//                tableView.beginUpdates()
+//                tableView.endUpdates()
+//            }) { (complete) in
+//                print("translateToDetail animation done!")
+////                self.viewC.translateToDetail(indexPath.row)
+//                self.isTransDetail = false
+//            }
+            
+            
+            
+            
+//            CAAnimation(duration: 3, animation: {
+//                tableView.scrollToRow(at: idxPath, at: .top, animated: true)
+//                cell.constraintHeight.constant = UIScreen.main.bounds.height
+//                UIView.animate(withDuration: 3, delay: 0, options: .curveEaseIn, animations: {
+//                    self.view.layoutIfNeeded()
+//                    tableView.beginUpdates()
+//                    tableView.endUpdates()
+//                }) { (complete) in
+//                    print("translateToDetail animation done!")
+////                    self.viewC.translateToDetail(indexPath.row)
+////                    self.isTransDetail = false
+//                }
+//
+//            }) {
+//                print("CAAnimation complete!")
+//
+//                self.isTransDetail = false
+//            }
+            
+            
+            
+            
+//            CAAnimation(duration: 3, animation: {
+//                cell.constraintHeight.constant = UIScreen.main.bounds.height
+//                UIView.animate(withDuration: 3, animations: {
+//                    self.view.layoutIfNeeded()
+//                    tableView.beginUpdates()
+//                    tableView.endUpdates()
+//                }) { (complete) in
+//                    print("animation complete!")
+////                    self.viewC.translateToDetail(indexPath.row)
+//                    self.isTransDetail = false
+//                }
+//            }) {
+//                print("CAAnimation complete!")
+//            }
+            
+            
+            
+        }        
     }
     
     // MARK: - UITableView Editing
@@ -147,12 +226,6 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return WeatherDataManager.shared.weathers.count
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (tableView.cellForRow(at: indexPath) as? DetailHeaderTableViewCell) != nil{
-            self.viewC.translateToDetail(indexPath.row)
-        }
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
