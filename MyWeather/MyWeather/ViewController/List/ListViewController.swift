@@ -12,7 +12,7 @@ class ListViewController: UIViewController {
     let CELL_HEIGHT: CGFloat = 100
     let PINCH_SCALE_ADD_DETAILVIEW: CGFloat = 2
     let PINCH_SCALE_REMOVE_DETAILVIEW: CGFloat = 1
-    let PINCH_SCALE_TRANS_DETAILVIEW: CGFloat = 4
+    let PINCH_SCALE_TRANS_DETAILVIEW: CGFloat = 3.5
     
     @IBOutlet weak var tableView: UITableView!
     

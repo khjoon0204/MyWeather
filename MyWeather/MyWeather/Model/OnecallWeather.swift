@@ -42,6 +42,7 @@ class Current: Codable {
     let windSpeed: Double?
     let windDeg: Int?
     let weather: [Weather]?
+    let rain: Rain?
     
     enum CodingKeys: String, CodingKey {
         case dt, sunrise, sunset, temp
@@ -51,10 +52,10 @@ class Current: Codable {
         case uvi, clouds, visibility
         case windSpeed = "wind_speed"
         case windDeg = "wind_deg"
-        case weather
+        case weather, rain
     }
     
-    init(dt: Int?, sunrise: Int?, sunset: Int?, temp: Double?, feelsLike: Double?, pressure: Int?, humidity: Int?, dewPoint: Double?, uvi: Double?, clouds: Int?, visibility: Int?, windSpeed: Double?, windDeg: Int?, weather: [Weather]?) {
+    init(dt: Int?, sunrise: Int?, sunset: Int?, temp: Double?, feelsLike: Double?, pressure: Int?, humidity: Int?, dewPoint: Double?, uvi: Double?, clouds: Int?, visibility: Int?, windSpeed: Double?, windDeg: Int?, weather: [Weather]?, rain: Rain?) {
         self.dt = dt
         self.sunrise = sunrise
         self.sunset = sunset
@@ -69,14 +70,28 @@ class Current: Codable {
         self.windSpeed = windSpeed
         self.windDeg = windDeg
         self.weather = weather
+        self.rain = rain
+    }
+}
+
+// MARK: - Rain
+class Rain: Codable {
+    let the1H: Double?
+    
+    enum CodingKeys: String, CodingKey {
+        case the1H = "1h"
+    }
+    
+    init(the1H: Double?) {
+        self.the1H = the1H
     }
 }
 
 // MARK: - Weather
 class Weather: Codable {
     let id: Int?
-    let main: Main?
-    let weatherDescription: Description?
+    let main: String?
+    let weatherDescription: String?
     let icon: String?
     
     enum CodingKeys: String, CodingKey {
@@ -85,27 +100,19 @@ class Weather: Codable {
         case icon
     }
     
-    init(id: Int?, main: Main?, weatherDescription: Description?, icon: String?) {
+    init(id: Int?, main: String?, weatherDescription: String?, icon: String?) {
         self.id = id
         self.main = main
         self.weatherDescription = weatherDescription
         self.icon = icon
     }
 }
-enum Main: String, Codable {
-    case clear = "Clear"
-    case clouds = "Clouds"
-    case fog = "Fog"
-}
-
-enum Description: String, Codable {
-    case 구름조금 = "구름조금"
-    case 맑음 = "맑음"
-    case 안개 = "안개"
-    case 약간의구름이낀하늘 = "약간의 구름이 낀 하늘"
-    case 온흐림 = "온흐림"
-    case 튼구름 = "튼구름"
-}
+//enum Main: String, Codable {
+//    case clear = "Clear"
+//    case clouds = "Clouds"
+//    case fog = "Fog"
+//    case rain = "Rain"
+//}
 
 // MARK: - Daily
 class Daily: Codable {
@@ -117,7 +124,7 @@ class Daily: Codable {
     let windDeg: Int?
     let weather: [Weather]?
     let clouds: Int?
-    let uvi: Double?
+    let rain, uvi: Double?
     
     enum CodingKeys: String, CodingKey {
         case dt, sunrise, sunset, temp
@@ -126,10 +133,10 @@ class Daily: Codable {
         case dewPoint = "dew_point"
         case windSpeed = "wind_speed"
         case windDeg = "wind_deg"
-        case weather, clouds, uvi
+        case weather, clouds, rain, uvi
     }
     
-    init(dt: Int?, sunrise: Int?, sunset: Int?, temp: Temp?, feelsLike: FeelsLike?, pressure: Int?, humidity: Int?, dewPoint: Double?, windSpeed: Double?, windDeg: Int?, weather: [Weather]?, clouds: Int?, uvi: Double?) {
+    init(dt: Int?, sunrise: Int?, sunset: Int?, temp: Temp?, feelsLike: FeelsLike?, pressure: Int?, humidity: Int?, dewPoint: Double?, windSpeed: Double?, windDeg: Int?, weather: [Weather]?, clouds: Int?, rain: Double?, uvi: Double?) {
         self.dt = dt
         self.sunrise = sunrise
         self.sunset = sunset
@@ -142,6 +149,7 @@ class Daily: Codable {
         self.windDeg = windDeg
         self.weather = weather
         self.clouds = clouds
+        self.rain = rain
         self.uvi = uvi
     }
 }
@@ -183,6 +191,7 @@ class Hourly: Codable {
     let windSpeed: Double?
     let windDeg: Int?
     let weather: [Weather]?
+    let rain: Rain?
     
     enum CodingKeys: String, CodingKey {
         case dt, temp
@@ -192,10 +201,10 @@ class Hourly: Codable {
         case clouds
         case windSpeed = "wind_speed"
         case windDeg = "wind_deg"
-        case weather
+        case weather, rain
     }
     
-    init(dt: Int?, temp: Double?, feelsLike: Double?, pressure: Int?, humidity: Int?, dewPoint: Double?, clouds: Int?, windSpeed: Double?, windDeg: Int?, weather: [Weather]?) {
+    init(dt: Int?, temp: Double?, feelsLike: Double?, pressure: Int?, humidity: Int?, dewPoint: Double?, clouds: Int?, windSpeed: Double?, windDeg: Int?, weather: [Weather]?, rain: Rain?) {
         self.dt = dt
         self.temp = temp
         self.feelsLike = feelsLike
@@ -206,5 +215,6 @@ class Hourly: Codable {
         self.windSpeed = windSpeed
         self.windDeg = windDeg
         self.weather = weather
+        self.rain = rain
     }
 }
