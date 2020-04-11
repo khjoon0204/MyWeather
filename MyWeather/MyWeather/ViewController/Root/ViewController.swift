@@ -19,10 +19,10 @@ class ViewController: UIViewController {
     var detailPageController: DetailPageController{
         get{return detailPC}
     }
-    private var detailVCs: [DetailViewController] = []
-    var detailViewControllers: [DetailViewController]{
-        get{return detailVCs}
-    }
+//    private var detailVCs: [DetailViewController] = []
+//    var detailViewControllers: [DetailViewController]{
+//        get{return detailVCs}
+//    }
     
     enum CurrentScreen {
         case list
@@ -38,45 +38,56 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         WeatherDataManager.shared.loadWeatherArray()
-        self.setupVCs()
-        self.translateToList()
-    }
-    
-    private func setupVCs(){
+        self.createVCObject()
         
-        for i in WeatherDataManager.shared.weathers {
-            let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-//            _ = vc.view
-            vc.config(w: i)
-            detailVCs.append(vc)
-        }
-        listVC = storyboard?.instantiateViewController(withIdentifier: "ListViewController") as? ListViewController
-        _ = listViewController.view
-        detailPC = storyboard?.instantiateViewController(withIdentifier: "DetailPageController") as? DetailPageController
-//        _ = detailPageController.view
+        self.translateToList()
+        
     }
     
-    private func addV(vc: UIViewController){
-        vc.removeFromParent()
-        addChild(vc)
-        view.addSubview(vc.view)
-        vc.view.pinEdgesToSuperView()
+    private func createVCObject(){
+//        createDetailVCObject()
+        listVC = storyboard?.instantiateViewController(withIdentifier: "ListViewController") as? ListViewController
+        addChild(listVC)
+        detailPC = storyboard?.instantiateViewController(withIdentifier: "DetailPageController") as? DetailPageController
+        
     }
+    
     
     // MARK: - Transition
     func translateToDetail(_ initPageIndex: Int = 0){
         resetPinchGesture()
-        self.detailPageController.view.removeFromSuperview()
-        addV(vc: self.detailPageController)
-        self.detailPageController.setupPageViewController(initPageIndex)
+        initVCs(vc: detailPC)
+//        resetDetailVCs(toUIViewController: detailPC.pageVC)
+//        createDetailVCObject()
+        
+//        detailPC.setupPageController(initPageIndex)
+        view.sendSubviewToBack(listVC.view)
         curScreen = .detailpage
     }
     
     func translateToList(){
-        addV(vc: listViewController)
-        self.detailPageController.removeFromParent()
+        initVCs(vc: listVC)
+//        listVC.addChild(detailPC)
+//        resetDetailVCs(toUIViewController: listVC)
+//        createDetailVCObject()
+        
+//        listVC.tableView.reloadData()
+        view.sendSubviewToBack(detailPC.view)
         curScreen = .list
     }
+    
+    private func initVCs(vc: UIViewController){
+        vc.view.removeFromSuperview()
+        view.addSubview(vc.view) // viewDidLoad call
+        vc.view.pinEdgesToSuperView()
+    }
+    
+//    private func resetDetailVCs(toUIViewController toVC: UIViewController){
+//        for vc in detailVCs {
+//            vc.view.removeFromSuperview() // viewDidLoad call
+//            vc.removeFromParent()
+//        }
+//    }
     
     func resetPinchGesture(){
         pinchGestureRecognizer.isEnabled = false
@@ -101,8 +112,7 @@ class ViewController: UIViewController {
             }
             if pinchGestureRecognizer.state.rawValue >= 3
             {
-                listViewController.touchIndex = nil
-                listViewController.tableViewtop.constant = 0
+                listViewController.resetSelection()
                 print("pinchIdx 초기화!")
             }
         }

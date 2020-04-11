@@ -34,16 +34,22 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("DetailViewController viewDidLoad! name:\(dt?.title)")
         registerNib()
         setup()
     }
     
-    private func registerNib(){
+    override func viewWillAppear(_ animated: Bool) {
+        print("\(#function) name:\(dt?.title)")
+        collectionView.reloadData()
+    }
+    
+    func registerNib(){
         collectionView.register(UINib(nibName: "TopHeaderCollectionReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "TopHeaderCollectionReusableView")
         collectionView.register(UINib(nibName: "HourlyHeaderCollectionReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HourlyHeaderCollectionReusableView")
     }
     
-    private func setup(){
+    func setup(){
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.collectionViewLayout = WeatherCollectionViewFlowLayout()

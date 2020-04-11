@@ -10,7 +10,7 @@ import UIKit
 
 class ListViewController: UIViewController {
     final let CELL_HEIGHT: CGFloat = 100
-    final let PINCH_SCALE_TRANSLATE: CGFloat = 4
+    final let PINCH_SCALE_TRANSLATE: CGFloat = 3.0
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewtop: NSLayoutConstraint!
@@ -18,14 +18,39 @@ class ListViewController: UIViewController {
     private var viewC: ViewController{
         return parent as! ViewController
     }
-    private lazy var vcs = viewC.detailViewControllers
+//    private var vcs: [DetailViewController]{
+//        return viewC.detailViewControllers
+//    }
     var touchIndex: IndexPath?
     var touchCellRect: CGRect = .zero
     
+//    lazy var pages: [DetailViewController] = {
+//        let arr = [DetailViewController](repeating: UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController, count: WeatherDataManager.shared.weathers.count)
+//        for i in 0..<arr.count {
+////            addChild(arr[i])
+////            arr[i].setup(i)
+//        }
+//        return arr
+//    }()
+    var pages: [DetailPageViewController] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        createDetailVCObject()
+        
 //        getWeathers()
         setup()
+    }
+    
+    private func createDetailVCObject(){
+        pages.removeAll()
+        for i in 0..<WeatherDataManager.shared.weathers.count {
+//            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+            let vc = DetailPageViewController()
+//            vc.config(w: i)
+            vc.setup(i)
+            pages.append(vc)
+        }
     }
     
 //    private func getWeathers(){
@@ -47,6 +72,7 @@ class ListViewController: UIViewController {
         tableView.dragInteractionEnabled = true
         tableView.dragDelegate = self
         tableView.dropDelegate = self
+        
     }
     
     // MARK:- public
@@ -60,7 +86,13 @@ class ListViewController: UIViewController {
         tableView.reloadData()
         tableView.scrollToRow(at: idxPath, at: .middle, animated: false)
     }
-   
+    
+    func resetSelection(){
+        touchIndex = nil
+        touchCellRect = .zero
+        tableViewtop.constant = 0
+    }
+       
 }
 
 extension ListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -69,7 +101,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "DetailHeaderTableViewCell", for: indexPath) as? DetailHeaderTableViewCell else { return UITableViewCell() }
         cell.config(data: WeatherDataManager.shared.weathers[indexPath.row])
         changeHeight(indexPath: indexPath, cell: cell)
-//        transDetailView(indexPath: indexPath, cell: cell)
+        transDetailView(indexPath: indexPath, cell: cell)
         addDetailView(indexPath: indexPath, cell: cell)
         return cell
     }
@@ -88,13 +120,44 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func addDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
         guard viewC.pinchGestureRecognizer.state.rawValue < 1 else {return}
-        guard vcs.count > 0 else {return}
-        if let v = vcs[indexPath.row].view{
-//            print("addDetailView indexPath=\(indexPath)")
+//        guard vcs.count ?? 0 > 0 else {return}
+//        if let v = vcs[indexPath.row].view{
+////            print("addDetailView indexPath=\(indexPath)")
+//            v.removeFromSuperview()
+//            cell.detailV.addSubview(v)
+//            v.pinEdgesToSuperView()
+//        }
+        
+        
+        let vc = pages[indexPath.row]
+        if let v = vc.view{
+                        print("addDetailView indexPath=\(indexPath)")
             v.removeFromSuperview()
             cell.detailV.addSubview(v)
             v.pinEdgesToSuperView()
         }
+        
+//        let vc0 = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+////        vc0.view.backgroundColor = UIColor.blue
+////        let lb = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+////        lb.text = "Hi, World!"
+////        vc0.view.addSubview(lb)
+//
+//        let vc1 = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+////        vc1.view.backgroundColor = UIColor.red
+////        let lb1 = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+////        lb1.text = "Hello, World!"
+////        vc1.view.addSubview(lb1)
+//
+//        let vc = UIPageViewController()
+//        vc.setViewControllers([indexPath.row % 2 == 0 ? vc0 : vc1], direction: .forward, animated: false, completion: nil)
+//        if let v = vc.view{
+//            v.backgroundColor = UIColor.brown
+//            cell.detailV.addSubview(v)
+//            v.pinEdgesToSuperView()
+//        }
+        
+        
     }
       
     func transDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
@@ -116,43 +179,31 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? DetailHeaderTableViewCell {
             print("\(#function) indexPath=\(indexPath)")
-            _ = touchIndex ?? indexPath
-//            addDetailSnapshot(cell: cell)
+            let idxPath = touchIndex ?? indexPath
             
-//            cell.constraintHeight.constant = UIScreen.main.bounds.height
-            
-//            DispatchQueue.main.async {
-//                print("scrollToRow!!")
-//                tableView.scrollToRow(at: idxPath, at: .top, animated: true)
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                    // your code here
-//                    self.isTranslating = false
-//                    //                    self.tableView.reloadData()
-//                }
-//            }
-            
-            self.isTranslating = false
-            print("animation complete!")
-            
-            
-//            CAAnimation(duration: 1, animation: {
-//                cell.constraintHeight.constant = UIScreen.main.bounds.height
-//                UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn, animations: {
-//                    self.tableView.beginUpdates()
-//                    self.tableView.endUpdates()
-//                }) { (complete) in
-//                    //                    print("animation done!")
-//                }
-//                tableView.scrollToRow(at: idxPath, at: .top, animated: true)
-//            }) {
-//                //                print("CAAnimation complete!")
+            touchCellRect = touchCellRect == .zero ? cell.frame : touchCellRect
+//            print("touchCellRect=\(touchCellRect) cell.frame=\(cell.frame) self.tableViewtop.constant=\(self.tableViewtop.constant)")
+            self.tableViewtop.constant = -self.touchCellRect.minY
+            cell.constraintHeight.constant = UIScreen.main.bounds.height
+            UIView.animate(withDuration: 1, animations: {
+                self.view.layoutIfNeeded() // update tableView
+                self.tableView.beginUpdates() // should update cell in didSelectRowAt
+                self.tableView.endUpdates()
+            }) { (complete) in
+                print("animation complete!")
 //                self.viewC.translateToDetail(idxPath.row)
-//                self.isTranslating = false
-//                self.tableView.reloadData()
-//            }
+                self.isTranslating = false
+                self.resetSelection()
+//                tableView.reloadData()
+                
+                self.view.addSubview(cell.detailV)
+                cell.detailV.pinEdgesToSuperView()
+                self.view.bringSubviewToFront(cell.detailV)
+            }
             
         }        
     }
+    
     
     // MARK: - UITableView Editing
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
