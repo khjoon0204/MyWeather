@@ -15,13 +15,11 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var parentVC: DetailPageViewController{
+    private var parentVC: DetailPageViewController{
         return self.parent as! DetailPageViewController
     }
     
-    lazy var curPage: Int = {
-        return self.parentVC.vcs.firstIndex(of: self)!
-    }()
+    private var dt: OnecallWeather?
     
     enum CellType: Int {
         case weekly = 0
@@ -40,14 +38,9 @@ class DetailViewController: UIViewController {
         setup()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-//        print("DetailView curPage=\(curPage)")
-    }
-    
     private func registerNib(){
         collectionView.register(UINib(nibName: "TopHeaderCollectionReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "TopHeaderCollectionReusableView")
         collectionView.register(UINib(nibName: "HourlyHeaderCollectionReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HourlyHeaderCollectionReusableView")
-        
     }
     
     private func setup(){
@@ -57,6 +50,10 @@ class DetailViewController: UIViewController {
           
     }
     
+    //MARK: - public
+    func config(w: OnecallWeather){
+        dt = w
+    }
 }
 
 extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
@@ -98,11 +95,11 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
      
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cellType = CellType(rawValue: indexPath.row)
         switch cellType {
         case.weekly:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WeeklyCollectionViewCell", for: indexPath) as? WeeklyCollectionViewCell else { return UICollectionViewCell() }
+//            print(#function)
             return cell
         default: break
         }
@@ -117,10 +114,13 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
             switch headerType {
             case .topHeader:
                 if let v = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "TopHeaderCollectionReusableView", for: indexPath) as? TopHeaderCollectionReusableView {
+//                    print(#function)
+                    v.name.text = dt?.title
                   return v
                 }
             case .hourlyHeader:
                 if let v = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HourlyHeaderCollectionReusableView", for: indexPath) as? HourlyHeaderCollectionReusableView {
+//                    print(#function)
                   return v
                 }
             default: break

@@ -9,35 +9,51 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
     @IBOutlet var pinchGestureRecognizer: UIPinchGestureRecognizer!
     
-    var listVC: ListViewController!
-    var detailC: DetailBackController!
-
-    enum CurrentPage {
+    private var listVC: ListViewController!
+    var listViewController: ListViewController{
+        get{return listVC}
+    }
+    private var detailPC: DetailPageController!
+    var detailPageController: DetailPageController{
+        get{return detailPC}
+    }
+    private var detailVCs: [DetailViewController] = []
+    var detailViewControllers: [DetailViewController]{
+        get{return detailVCs}
+    }
+    
+    enum CurrentScreen {
         case list
-        case detail
+        case detailpage
     }
     
     /// 현재 화면 상태값.
-    private var curPage: CurrentPage = .list
-    var currentPage: CurrentPage{
-        get{return curPage}
+    private var curScreen: CurrentScreen = .list
+    var currentScreen: CurrentScreen{
+        get{return curScreen}
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        setupVCs()
-        translateToList()
+        WeatherDataManager.shared.loadWeatherArray()
+        self.setupVCs()
+        self.translateToList()
     }
-
+    
     private func setupVCs(){
+        
+        for i in WeatherDataManager.shared.weathers {
+            let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+//            _ = vc.view
+            vc.config(w: i)
+            detailVCs.append(vc)
+        }
         listVC = storyboard?.instantiateViewController(withIdentifier: "ListViewController") as? ListViewController
-        _ = listVC.viewIfLoaded
-        detailC = storyboard?.instantiateViewController(withIdentifier: "DetailPageController") as? DetailBackController
-        _ = detailC.viewIfLoaded
+        _ = listViewController.view
+        detailPC = storyboard?.instantiateViewController(withIdentifier: "DetailPageController") as? DetailPageController
+//        _ = detailPageController.view
     }
     
     private func addV(vc: UIViewController){
@@ -50,16 +66,16 @@ class ViewController: UIViewController {
     // MARK: - Transition
     func translateToDetail(_ initPageIndex: Int = 0){
         resetPinchGesture()
-        self.detailC.view.removeFromSuperview()
-        addV(vc: self.detailC)
-        self.detailC.setupPageViewController(initPageIndex)
-        curPage = .detail
+        self.detailPageController.view.removeFromSuperview()
+        addV(vc: self.detailPageController)
+        self.detailPageController.setupPageViewController(initPageIndex)
+        curScreen = .detailpage
     }
     
     func translateToList(){
-        addV(vc: listVC)
-        self.detailC.removeFromParent()
-        curPage = .list
+        addV(vc: listViewController)
+        self.detailPageController.removeFromParent()
+        curScreen = .list
     }
     
     func resetPinchGesture(){
@@ -70,23 +86,29 @@ class ViewController: UIViewController {
     // MARK: - Function
     @IBAction func pinch(_ sender: UIPinchGestureRecognizer) {
         tmpPinchScale = sender.scale
-//        print("\(#function) page=\(currentPage) scale=\(pinchGestureRecognizer.scale.rounded()) state=\(pinchGestureRecognizer.state.rawValue)")
-        if currentPage == .list{
-            guard !listVC.isTranslating else{return}
-            let touch = sender.location(in: listVC.tableView)
-            if let indexPath = listVC.tableView.indexPathForRow(at: touch) {
-                if listVC.touchIndex == nil{listVC.touchIndex = indexPath}
-                listVC.tableView.reloadData()
-                if pinchGestureRecognizer.state.rawValue >= 3
-                {
-                    listVC.touchIndex = nil
-                    print("pinchIdx 초기화!")
+//        print("\(#function) screen=\(curScreen) scale=\(pinchGestureRecognizer.scale.rounded()) state=\(pinchGestureRecognizer.state.rawValue) isTranslating=\(listViewController.isTranslating)")
+        if currentScreen == .list{
+            guard !listViewController.isTranslating else{return}
+            let touch = sender.location(in: listViewController.tableView)
+            if let indexPath = listViewController.tableView.indexPathForRow(at: touch) {
+//                print("touchIndex=\(indexPath)")
+                if listViewController.touchIndex == nil{
+                    listViewController.touchIndex = indexPath
+                    let rect = listViewController.tableView.rectForRow(at: indexPath)
+                    listViewController.touchCellRect = view.convert(rect, from: listViewController.tableView)
                 }
+                listViewController.tableView.reloadData()
+            }
+            if pinchGestureRecognizer.state.rawValue >= 3
+            {
+                listViewController.touchIndex = nil
+                listViewController.tableViewtop.constant = 0
+                print("pinchIdx 초기화!")
             }
         }
-        else if currentPage == .detail{
+        else if currentScreen == .detailpage{
             translateToList()
-            listVC.listFromDetail(index: detailC.getPageIndex())
+            listViewController.listFromDetail(index: detailPageController.getPageIndex())
         }
     }
     

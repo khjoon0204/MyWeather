@@ -9,7 +9,8 @@
 import UIKit
 
 class TopHeaderCollectionReusableView: UICollectionReusableView {
-
+    @IBOutlet weak var name: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

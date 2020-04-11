@@ -8,16 +8,14 @@
 
 import UIKit
 
-class DetailBackController: UIViewController {
+class DetailPageController: UIViewController {
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var pageControl: UIPageControl!
     
-    let pageVC = DetailPageViewController()
+    private let pageVC = DetailPageViewController()
     
-    var viewController: ViewController{
-        return parent as! ViewController
-    }
+    fileprivate var viewC: ViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,13 +27,14 @@ class DetailBackController: UIViewController {
         self.addChild(pageVC)
         self.contentView.addSubview(pageVC.view)
         pageVC.view.pinEdgesToSuperView()
+        
     }
     
     @IBAction func pressWeb(_ sender: UIBarButtonItem) {
     }
     
     @IBAction func pressList(_ sender: Any) {
-        viewController.translateToList()
+        viewC?.translateToList()
     }
     
     // MARK:- public
@@ -52,10 +51,10 @@ class DetailBackController: UIViewController {
 
 class DetailPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, UIScrollViewDelegate{
     
-    var vcs: [DetailViewController] = []
+    lazy var vcs = parentVC.viewC?.detailViewControllers ?? []
     
-    var parentVC: DetailBackController{
-        return self.parent as! DetailBackController
+    var parentVC: DetailPageController{
+        return self.parent as! DetailPageController
     }
     
     override init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil) {
@@ -74,17 +73,12 @@ class DetailPageViewController: UIPageViewController, UIPageViewControllerDataSo
     fileprivate func setup(_ initPageIndex: Int = 0){
         dataSource = self
         delegate = self
-        vcs = [] // 초기화
-        for _ in WeatherDataManager.shared.weathers {
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-//            vc.config(w: w)
-            vcs.append(vc)
-        }
+        
         parentVC.pageControl.numberOfPages = vcs.count
         parentVC.pageControl.currentPage = initPageIndex
-        self.setViewControllers([vcs[initPageIndex]], direction: .forward, animated: false, completion: nil)
-        
+        if vcs.count > 0{self.setViewControllers([vcs[initPageIndex]], direction: .forward, animated: false, completion: nil)} 
     }
+    
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         guard let firstViewController = viewControllers?.first, let firstViewControllerIndex = vcs.firstIndex(of: firstViewController as! DetailViewController) else{

@@ -36,10 +36,10 @@
             </objects>
             <point key="canvasLocation" x="132" y="138"/>
         </scene>
-        <!--Detail Back Controller-->
+        <!--Detail Page Controller-->
         <scene sceneID="hN3-Vc-Y3D">
             <objects>
-                <viewController storyboardIdentifier="DetailPageController" id="vez-0C-xzv" customClass="DetailBackController" customModule="MyWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailPageController" id="vez-0C-xzv" customClass="DetailPageController" customModule="MyWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4d4-YG-YmJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -178,7 +178,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="100.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QW1-F7-7un">
+                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QW1-F7-7un" userLabel="UserInteractable View">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="100.5"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3f4-81-HOz">
@@ -204,7 +204,7 @@
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eN2-2m-TuB">
                                                             <rect key="frame" x="0.0" y="0.0" width="414" height="100.5"/>
-                                                            <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                                         </view>
                                                     </subviews>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -250,6 +250,7 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="MRP-34-yTJ" id="D2a-bK-CT9"/>
+                        <outlet property="tableViewtop" destination="uWt-Fn-nAZ" id="3ha-AR-ceJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HTb-Ug-K7J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

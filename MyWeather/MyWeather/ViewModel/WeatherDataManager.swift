@@ -87,7 +87,7 @@ class WeatherDataManager: NSObject {
     }
     
     /// Local Data -> Memory Array
-    func loadWeatherArray(completion: ((Bool) -> Void)?){
+    func loadWeatherArray(){
         guard let dts = load(), dts.count > 0 else {
             return
         }
