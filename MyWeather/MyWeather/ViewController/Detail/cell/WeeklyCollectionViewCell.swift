@@ -14,6 +14,24 @@ class WeeklyCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var desc: UILabel!
     @IBOutlet weak var etcStack: UIStackView!
     
+//    //forces the system to do one layout pass
+//    var isHeightCalculated: Bool = false
+//    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+//        //Exhibit A - We need to cache our calculation to prevent a crash.
+//        if !isHeightCalculated {
+//            setNeedsLayout()
+//            layoutIfNeeded()
+//            let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
+////            var newFrame = layoutAttributes.frame
+////            newFrame.size.width = CGFloat(ceilf(Float(size.width)))
+//            var newFrame = CGRect(x: 0, y: 120, width: layoutAttributes.frame.width, height: layoutAttributes.frame.height)
+//            print("preferredLayoutAttributesFitting: size=\(size) new=\(newFrame)")
+//            layoutAttributes.frame = newFrame
+//            isHeightCalculated = true
+//        }
+//        return layoutAttributes
+//    }
+    
     func config(OnecallWeather d: OnecallWeather?){
         guard let d = d, let cur = d.current else { return }
         dt = d

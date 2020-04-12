@@ -11,7 +11,7 @@ import UIKit
 class DetailViewController: UIViewController {
     final let TOP_HEADER_HEIGHT: CGFloat = 380
     final let HOURLY_HEADER_HEIGHT: CGFloat = 116
-    final let WEEKLY_HEIGHT: CGFloat = 1000
+    final let WEEKLY_HEIGHT: CGFloat = 800
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -41,7 +41,6 @@ class DetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         print("\(#function) name:\(dt?.title)")
-//        collectionView.reloadData()
     }
     
     func registerNib(){
@@ -55,6 +54,10 @@ class DetailViewController: UIViewController {
 //        collectionView.collectionViewLayout = WeatherCollectionViewFlowLayout()
         let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
         layout?.sectionHeadersPinToVisibleBounds = true
+//        layout?.sectionInset = UIEdgeInsets.init(top: -120, left: 0, bottom: 0, right: 0)
+        
+        
+        
     }
     
     //MARK: - public
@@ -72,7 +75,6 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == HeaderType.topHeader.rawValue{return 0}
         else{return CellType.count.rawValue}
-        
     }
     
     /// Cell Size
@@ -124,13 +126,11 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
             switch headerType {
             case .topHeader:
                 if let v = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "TopHeaderCollectionReusableView", for: indexPath) as? TopHeaderCollectionReusableView {
-//                    print(#function)
                     v.config(OnecallWeather: dt)
                   return v
                 }
             case .hourlyHeader:
                 if let v = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HourlyHeaderCollectionReusableView", for: indexPath) as? HourlyHeaderCollectionReusableView {
-//                    print(#function)
                     v.config(OnecallWeather: dt)
                   return v
                 }
@@ -141,6 +141,15 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
         return UICollectionReusableView()
     }
+
+    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        if section == HeaderType.hourlyHeader.rawValue{
+//            return UIEdgeInsets(top: -120, left: 0, bottom: 0, right: 0)
+//        }
+//        return .zero
+//    }
+
     
 }
 
