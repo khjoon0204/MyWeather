@@ -15,10 +15,10 @@ class TopHeaderCollectionReusableView: UICollectionReusableView {
         super.awakeFromNib()
         // Initialization code
         
-        UIView.animate(withDuration: 2.0, delay: 0, options: [.repeat, .autoreverse], animations: {
-            self.name.center = CGPoint(x: -100, y: 0)
-
-        }, completion: nil)
+//        UIView.animate(withDuration: 2.0, delay: 0, options: [.repeat, .autoreverse], animations: {
+//            self.name.center = CGPoint(x: -100, y: 0)
+//
+//        }, completion: nil)
     }
     
 }

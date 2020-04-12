@@ -18,16 +18,16 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="도시" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lwu-aE-wXf">
-                            <rect key="frame" x="116.5" y="10" width="87" height="60"/>
+                            <rect key="frame" x="116.5" y="0.0" width="87" height="60"/>
                             <fontDescription key="fontDescription" type="system" pointSize="50"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" systemColor="systemIndigoColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="lwu-aE-wXf" firstAttribute="centerX" secondItem="Qzo-aI-BJZ" secondAttribute="centerX" id="5yV-0u-igt"/>
-                        <constraint firstItem="lwu-aE-wXf" firstAttribute="top" secondItem="Qzo-aI-BJZ" secondAttribute="top" constant="10" id="MjS-hJ-HN4"/>
+                        <constraint firstItem="lwu-aE-wXf" firstAttribute="centerX" secondItem="Qzo-aI-BJZ" secondAttribute="centerX" id="uVk-Sg-feQ"/>
+                        <constraint firstItem="lwu-aE-wXf" firstAttribute="top" secondItem="Qzo-aI-BJZ" secondAttribute="top" id="vfI-cc-yY9"/>
                     </constraints>
                 </view>
             </subviews>

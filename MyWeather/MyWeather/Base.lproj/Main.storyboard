@@ -77,7 +77,7 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="jx3-jv-ODe" firstAttribute="top" secondItem="aXO-Mv-2Fr" secondAttribute="bottom" id="2Ea-3s-3nZ"/>
-                            <constraint firstItem="jx3-jv-ODe" firstAttribute="bottom" secondItem="tnk-zn-l8u" secondAttribute="bottom" id="LtN-JX-Zui"/>
+                            <constraint firstItem="jx3-jv-ODe" firstAttribute="bottom" secondItem="tnk-zn-l8u" secondAttribute="bottom" priority="749" id="LtN-JX-Zui"/>
                             <constraint firstItem="jx3-jv-ODe" firstAttribute="leading" secondItem="tnk-zn-l8u" secondAttribute="leading" id="b2Y-Gt-Ryy"/>
                             <constraint firstItem="jx3-jv-ODe" firstAttribute="trailing" secondItem="tnk-zn-l8u" secondAttribute="trailing" id="jzH-FS-0Kt"/>
                             <constraint firstItem="aXO-Mv-2Fr" firstAttribute="leading" secondItem="tnk-zn-l8u" secondAttribute="leading" id="mKc-wj-T8v"/>
@@ -114,7 +114,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="WeeklyCollectionViewCell" translatesAutoresizingMaskIntoConstraints="NO" id="zf6-EV-4po" customClass="WeeklyCollectionViewCell" customModule="MyWeather" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" reuseIdentifier="WeeklyCollectionViewCell" translatesAutoresizingMaskIntoConstraints="NO" id="zf6-EV-4po" customClass="WeeklyCollectionViewCell" customModule="MyWeather" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="800"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="6YC-9f-QmF">
@@ -215,7 +215,7 @@
                                                         <constraint firstAttribute="bottom" secondItem="eN2-2m-TuB" secondAttribute="bottom" id="Ydb-e3-Fuf"/>
                                                         <constraint firstItem="3f4-81-HOz" firstAttribute="top" secondItem="QW1-F7-7un" secondAttribute="top" id="lwU-Af-MOL"/>
                                                         <constraint firstItem="eN2-2m-TuB" firstAttribute="top" secondItem="QW1-F7-7un" secondAttribute="top" id="oaJ-ly-kgw"/>
-                                                        <constraint firstAttribute="height" priority="750" constant="100" id="ugj-Rz-3H8"/>
+                                                        <constraint firstAttribute="height" priority="751" constant="100" id="ugj-Rz-3H8"/>
                                                         <constraint firstAttribute="trailing" secondItem="eN2-2m-TuB" secondAttribute="trailing" id="yJZ-Zu-Fwq"/>
                                                     </constraints>
                                                 </view>
@@ -273,14 +273,14 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchTableViewCell" id="n4f-Ol-c1d" customClass="SearchTableViewCell" customModule="MyWeather" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="41"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="41.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="n4f-Ol-c1d" id="3DE-bp-20z">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sPq-Cr-cCj">
-                                                    <rect key="frame" x="40" y="10" width="42" height="21"/>
+                                                    <rect key="frame" x="40" y="10" width="42" height="21.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>

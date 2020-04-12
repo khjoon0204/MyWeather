@@ -9,7 +9,7 @@
 import UIKit
 
 class ListViewController: UIViewController {
-    final let CELL_HEIGHT: CGFloat = 100
+    final let CELL_HEIGHT: CGFloat = 100.0
     final let PINCH_SCALE_TRANSLATE: CGFloat = 3.0
     
     @IBOutlet weak var tableView: UITableView!
@@ -18,11 +18,15 @@ class ListViewController: UIViewController {
     private var viewC: ViewController{
         return parent as! ViewController
     }
-//    private var vcs: [DetailViewController]{
-//        return viewC.detailViewControllers
-//    }
+    
+    private var detailPCs: [DetailPageController] = []
+    var detailPageControllers: [DetailPageController]{
+        get{return detailPCs}
+    }
+    
     var touchIndex: IndexPath?
     var touchCellRect: CGRect = .zero
+    
     
 //    lazy var pages: [DetailViewController] = {
 //        let arr = [DetailViewController](repeating: UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController, count: WeatherDataManager.shared.weathers.count)
@@ -32,8 +36,7 @@ class ListViewController: UIViewController {
 //        }
 //        return arr
 //    }()
-    var pages: [DetailPageViewController] = []
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         createDetailVCObject()
@@ -43,13 +46,10 @@ class ListViewController: UIViewController {
     }
     
     private func createDetailVCObject(){
-        pages.removeAll()
+        detailPCs.removeAll()
         for i in 0..<WeatherDataManager.shared.weathers.count {
-//            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-            let vc = DetailPageViewController()
-//            vc.config(w: i)
-            vc.setup(i)
-            pages.append(vc)
+            let vc = storyboard?.instantiateViewController(withIdentifier: "DetailPageController") as! DetailPageController
+            detailPCs.append(vc)
         }
     }
     
@@ -78,13 +78,34 @@ class ListViewController: UIViewController {
     // MARK:- public
     var isTranslating = false
     
-    func listFromDetail(index i: Int){
-        let idxPath = IndexPath(row: i, section: 0)
-        touchIndex = idxPath
+    private var detailIndex: Int = -1
+    
+    func showList(){
+        guard let v = self.view.subviews.last else{return}
+        self.view.subviews.last?.removeFromSuperview()
+        self.viewC.changeScreen(currentScreen: .list)
+//        showListAnim(animateComplete: nil)
         
-        viewC.pinchGestureRecognizer.scale = UIScreen.main.bounds.height / CELL_HEIGHT
+//        viewC.pinchGestureRecognizer.scale = UIScreen.main.bounds.height / CELL_HEIGHT
+////
+////        tableView.reloadData()
+////        tableView.beginUpdates()
+////        tableView.endUpdates()
+//        tableView.reloadData()
+//        showListAnim { (complete) in
+//            self.view.subviews.last?.removeFromSuperview()
+//            self.viewC.changeScreen(currentScreen: .list)
+//        }
+
+        detailIndex = -1
         tableView.reloadData()
-        tableView.scrollToRow(at: idxPath, at: .middle, animated: false)
+    }
+    
+    func showDetail(detailView v: UIView){
+        viewC.changeScreen(currentScreen: .detail)
+        self.view.addSubview(v)
+        v.pinEdgesToSuperView()
+        self.view.bringSubviewToFront(v)
     }
     
     func resetSelection(){
@@ -107,6 +128,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func changeHeight(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
+//        guard detailIndex == -1 else{return}
         if indexPath == touchIndex{
             let dist = touchCellRect.minY * ((viewC.pinchGestureRecognizer.scale - 1) / PINCH_SCALE_TRANSLATE)
             cell.constraintHeight.constant = CELL_HEIGHT * max(viewC.pinchGestureRecognizer.scale, 1.0) + dist
@@ -120,50 +142,23 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func addDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
         guard viewC.pinchGestureRecognizer.state.rawValue < 1 else {return}
-//        guard vcs.count ?? 0 > 0 else {return}
-//        if let v = vcs[indexPath.row].view{
-////            print("addDetailView indexPath=\(indexPath)")
-//            v.removeFromSuperview()
-//            cell.detailV.addSubview(v)
-//            v.pinEdgesToSuperView()
-//        }
-        
-        
-        let vc = pages[indexPath.row]
+        guard detailPCs.count > 0 else {return}
+        let vc = detailPCs[indexPath.row]
         if let v = vc.view{
-                        print("addDetailView indexPath=\(indexPath)")
+            print("addDetailView indexPath=\(indexPath)")
             v.removeFromSuperview()
+            vc.dele = self
+            vc.setupPageViewController(initPageIndex: indexPath.row)
             cell.detailV.addSubview(v)
             v.pinEdgesToSuperView()
         }
-        
-//        let vc0 = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-////        vc0.view.backgroundColor = UIColor.blue
-////        let lb = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
-////        lb.text = "Hi, World!"
-////        vc0.view.addSubview(lb)
-//
-//        let vc1 = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-////        vc1.view.backgroundColor = UIColor.red
-////        let lb1 = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
-////        lb1.text = "Hello, World!"
-////        vc1.view.addSubview(lb1)
-//
-//        let vc = UIPageViewController()
-//        vc.setViewControllers([indexPath.row % 2 == 0 ? vc0 : vc1], direction: .forward, animated: false, completion: nil)
-//        if let v = vc.view{
-//            v.backgroundColor = UIColor.brown
-//            cell.detailV.addSubview(v)
-//            v.pinEdgesToSuperView()
-//        }
-        
-        
     }
       
     func transDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
         if indexPath == touchIndex,
+            viewC.currentScreen == .list,
             viewC.isPinchZoomIn,
-//            viewC.pinchGestureRecognizer.state.rawValue >= 2,
+            viewC.pinchGestureRecognizer.state.rawValue >= 2,
             viewC.pinchGestureRecognizer.scale > PINCH_SCALE_TRANSLATE,
             !isTranslating
         {
@@ -180,30 +175,47 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         if let cell = tableView.cellForRow(at: indexPath) as? DetailHeaderTableViewCell {
             print("\(#function) indexPath=\(indexPath)")
             let idxPath = touchIndex ?? indexPath
-            
-            touchCellRect = touchCellRect == .zero ? cell.frame : touchCellRect
-//            print("touchCellRect=\(touchCellRect) cell.frame=\(cell.frame) self.tableViewtop.constant=\(self.tableViewtop.constant)")
-            self.tableViewtop.constant = -self.touchCellRect.minY
-            cell.constraintHeight.constant = UIScreen.main.bounds.height
-            UIView.animate(withDuration: 1, animations: {
-                self.view.layoutIfNeeded() // update tableView
-                self.tableView.beginUpdates() // should update cell in didSelectRowAt
-                self.tableView.endUpdates()
-            }) { (complete) in
-                print("animation complete!")
-//                self.viewC.translateToDetail(idxPath.row)
-                self.isTranslating = false
-                self.resetSelection()
-//                tableView.reloadData()
-                
-                self.view.addSubview(cell.detailV)
-                cell.detailV.pinEdgesToSuperView()
-                self.view.bringSubviewToFront(cell.detailV)
-            }
-            
+            self.showDetailAnim(cell: cell, indexPath: idxPath)
         }        
     }
     
+    func showDetailAnim(cell: DetailHeaderTableViewCell, indexPath: IndexPath){
+        guard let v = cell.detailV.subviews.first else { return }
+        touchCellRect = touchCellRect == .zero ? cell.frame : touchCellRect
+        //            print("touchCellRect=\(touchCellRect) cell.frame=\(cell.frame) self.tableViewtop.constant=\(self.tableViewtop.constant)")
+        self.tableViewtop.constant = -self.touchCellRect.minY
+        cell.constraintHeight.constant = UIScreen.main.bounds.height
+        UIView.animate(withDuration: 1, animations: {
+            self.view.layoutIfNeeded()
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+        }) { (complete) in
+            print("animation complete!")
+            //                self.viewC.translateToDetail(idxPath.row)
+            self.showDetail(detailView: v)
+            self.isTranslating = false
+            self.detailIndex = indexPath.row
+            self.resetSelection()
+        }
+    }
+    
+    func showListAnim(animateComplete animComplete:((Bool) -> Void)?){
+        let idxPath = IndexPath(row: detailIndex, section: 0)
+        guard let cell = tableView.cellForRow(at: idxPath) as? DetailHeaderTableViewCell else{return}
+        
+        touchCellRect = touchCellRect == .zero ? cell.frame : touchCellRect
+        addDetailView(indexPath: idxPath, cell: cell)
+//        self.tableViewtop.constant = -self.touchCellRect.minY
+//        cell.constraintHeight.constant = UIScreen.main.bounds.height
+//        UIView.animate(withDuration: 1, animations: {
+//            self.view.layoutIfNeeded()
+//            self.tableView.beginUpdates()
+//            self.tableView.endUpdates()
+//        }) { (complete) in
+//            print("animation complete!")
+//            animComplete?(complete)
+//        }
+    }
     
     // MARK: - UITableView Editing
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -267,3 +279,9 @@ extension ListViewController: SearchViewControllerDelegate{
     }
 }
 
+extension ListViewController: DetailPageControllerDelegate{
+    func pressList(_ sender: Any) {
+        showList()
+    }
+    
+}

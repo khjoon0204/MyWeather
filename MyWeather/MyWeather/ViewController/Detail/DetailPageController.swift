@@ -8,16 +8,18 @@
 
 import UIKit
 
+protocol DetailPageControllerDelegate {
+    func pressList(_ sender: Any)
+}
+
 class DetailPageController: UIViewController {
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var pageControl: UIPageControl!
     
-    var pageVC = DetailPageViewController()
+    private var pageVC = DetailPageViewController()
     
-    fileprivate var viewC: ViewController?{
-        return parent as? ViewController
-    }
+    var dele: DetailPageControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,36 +38,27 @@ class DetailPageController: UIViewController {
     }
     
     @IBAction func pressList(_ sender: Any) {
-        viewC?.translateToList()
+        dele?.pressList(sender)
     }
     
     // MARK:- public
-    func setupPageController(_ initPageIndex: Int = 0){
-//        pageVC = DetailPageViewController()
-//        addPageViewController()
-//        view.bringSubviewToFront(pageVC.view)
-//        pageVC.setup(initPageIndex)
-        pageVC.setup(initPageIndex)
-    }
-    
     func getPageIndex() -> Int{
         return pageControl.currentPage
     }
     
+    func setupPageViewController(initPageIndex idx: Int){
+        pageVC.setup(idx)
+    }
     
 }
 
 class DetailPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, UIScrollViewDelegate{
     
-//    private var vcs: [DetailViewController]{
-//        return parentVC.viewC?.detailViewControllers ?? []
-//    }
+    private var vcs: [DetailViewController] = []
     
-    var vcs: [DetailViewController] = []
-    
-//    var parentVC: DetailPageController{
-//        return self.parent as! DetailPageController
-//    }
+    var parentVC: DetailPageController{
+        return self.parent as! DetailPageController
+    }
     
     override init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil) {
         super.init(transitionStyle: .scroll, navigationOrientation: navigationOrientation, options: options)
@@ -83,16 +76,14 @@ class DetailPageViewController: UIPageViewController, UIPageViewControllerDataSo
 //        setup()
     }
     
-    func setup(_ initPageIndex: Int = 0){
+    fileprivate func setup(_ initPageIndex: Int = 0){
         print(#function)
-//        guard vcs.count > 0 else {
-//            return
-//        }
         createDetailVCObject()
+        guard vcs.count > 0 else {return}
         dataSource = self
         delegate = self
-//        parentVC.pageControl.numberOfPages = vcs.count
-//        parentVC.pageControl.currentPage = initPageIndex
+        parentVC.pageControl.numberOfPages = vcs.count
+        parentVC.pageControl.currentPage = initPageIndex
         self.setViewControllers([vcs[initPageIndex]], direction: .forward, animated: false, completion: nil)
     }
     
@@ -105,12 +96,13 @@ class DetailPageViewController: UIPageViewController, UIPageViewControllerDataSo
         }
     }
     
+    // MARK: - UIPageViewController Delegate
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         guard let firstViewController = viewControllers?.first, let firstViewControllerIndex = vcs.firstIndex(of: firstViewController as! DetailViewController) else{
             return
         }
-//        parentVC.pageControl.currentPage = firstViewControllerIndex
-//        print("currentpage \(parentVC.pageControl.currentPage)")
+        parentVC.pageControl.currentPage = firstViewControllerIndex
+        print("currentpage \(parentVC.pageControl.currentPage)")
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {

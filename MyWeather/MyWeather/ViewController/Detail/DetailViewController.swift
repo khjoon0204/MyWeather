@@ -41,7 +41,7 @@ class DetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         print("\(#function) name:\(dt?.title)")
-        collectionView.reloadData()
+//        collectionView.reloadData()
     }
     
     func registerNib(){

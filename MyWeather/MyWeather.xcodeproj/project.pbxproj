@@ -38,7 +38,6 @@
 		F48CC73C243C4D7500A49CB6 /* DetailHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48CC73B243C4D7500A49CB6 /* DetailHeaderTableViewCell.swift */; };
 		F48CC748243C755000A49CB6 /* ListFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48CC747243C755000A49CB6 /* ListFooterView.swift */; };
 		F48CC74A243C756900A49CB6 /* ListFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F48CC749243C756900A49CB6 /* ListFooterView.xib */; };
-		F48CC74C243C9A7400A49CB6 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48CC74B243C9A7400A49CB6 /* UIViewController+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,7 +86,6 @@
 		F48CC73B243C4D7500A49CB6 /* DetailHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		F48CC747243C755000A49CB6 /* ListFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFooterView.swift; sourceTree = "<group>"; };
 		F48CC749243C756900A49CB6 /* ListFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListFooterView.xib; sourceTree = "<group>"; };
-		F48CC74B243C9A7400A49CB6 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,7 +257,6 @@
 			isa = PBXGroup;
 			children = (
 				F48CC71F243BF98600A49CB6 /* UIView+Extension.swift */,
-				F48CC74B243C9A7400A49CB6 /* UIViewController+Extension.swift */,
 				F40A7C24243EA6EA00FDB61A /* Date+Extension.swift */,
 				F40A7C25243EA6EA00FDB61A /* Double+Extension.swift */,
 			);
@@ -398,7 +395,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F48CC74C243C9A7400A49CB6 /* UIViewController+Extension.swift in Sources */,
 				F43F6FED243B082C003C7303 /* GlobalVars.swift in Sources */,
 				F43F6FF1243B0F28003C7303 /* OnecallWeather.swift in Sources */,
 				F43F6FE6243AFB0D003C7303 /* EndpointType.swift in Sources */,
