@@ -9,9 +9,9 @@
 import UIKit
 
 class DetailViewController: UIViewController {
-    final let TOP_HEADER_HEIGHT: CGFloat = 200
-    final let HOURLY_HEADER_HEIGHT: CGFloat = 75
-    final let WEEKLY_HEIGHT: CGFloat = 800
+    final let TOP_HEADER_HEIGHT: CGFloat = 380
+    final let HOURLY_HEADER_HEIGHT: CGFloat = 116
+    final let WEEKLY_HEIGHT: CGFloat = 1000
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -53,7 +53,7 @@ class DetailViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.collectionViewLayout = WeatherCollectionViewFlowLayout()
-          
+        collectionView.contentInsetAdjustmentBehavior = .always
     }
     
     //MARK: - public
@@ -81,7 +81,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.view.bounds.width, height: WEEKLY_HEIGHT)
     }
-    
+        
     /// Header Size
     /// - Parameters:
     ///   - collectionView: <#collectionView description#>
@@ -106,6 +106,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         case.weekly:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WeeklyCollectionViewCell", for: indexPath) as? WeeklyCollectionViewCell else { return UICollectionViewCell() }
 //            print(#function)
+            cell.config(OnecallWeather: self.dt)
             return cell
         default: break
         }
@@ -121,12 +122,13 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
             case .topHeader:
                 if let v = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "TopHeaderCollectionReusableView", for: indexPath) as? TopHeaderCollectionReusableView {
 //                    print(#function)
-                    v.name.text = dt?.title
+                    v.config(OnecallWeather: dt)
                   return v
                 }
             case .hourlyHeader:
                 if let v = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HourlyHeaderCollectionReusableView", for: indexPath) as? HourlyHeaderCollectionReusableView {
 //                    print(#function)
+                    v.config(OnecallWeather: dt)
                   return v
                 }
             default: break

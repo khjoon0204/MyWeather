@@ -28,6 +28,12 @@
 		F43F6FF8243B3322003C7303 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43F6FF7243B3322003C7303 /* ListViewController.swift */; };
 		F43F6FFB243B3490003C7303 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43F6FFA243B3490003C7303 /* DetailViewController.swift */; };
 		F43F6FFE243B3F2E003C7303 /* WeatherDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43F6FFD243B3F2E003C7303 /* WeatherDataManager.swift */; };
+		F4874E6F2442BFEC00ED7C17 /* HourlyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4874E6D2442BFEC00ED7C17 /* HourlyCollectionViewCell.swift */; };
+		F4874E702442BFEC00ED7C17 /* HourlyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4874E6E2442BFEC00ED7C17 /* HourlyCollectionViewCell.xib */; };
+		F4874E722442EBA600ED7C17 /* WeeklyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4874E712442EBA600ED7C17 /* WeeklyView.xib */; };
+		F4874E742442EBF800ED7C17 /* EtcView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4874E732442EBF800ED7C17 /* EtcView.xib */; };
+		F4874E762442ECC600ED7C17 /* WeeklyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4874E752442ECC600ED7C17 /* WeeklyView.swift */; };
+		F4874E782442ECD500ED7C17 /* EtcView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4874E772442ECD500ED7C17 /* EtcView.swift */; };
 		F48CC720243BF98600A49CB6 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48CC71F243BF98600A49CB6 /* UIView+Extension.swift */; };
 		F48CC727243BFD1E00A49CB6 /* WeeklyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48CC726243BFD1E00A49CB6 /* WeeklyCollectionViewCell.swift */; };
 		F48CC730243C2CBE00A49CB6 /* TopHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48CC72E243C2CBE00A49CB6 /* TopHeaderCollectionReusableView.swift */; };
@@ -76,6 +82,12 @@
 		F43F6FF7243B3322003C7303 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		F43F6FFA243B3490003C7303 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		F43F6FFD243B3F2E003C7303 /* WeatherDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataManager.swift; sourceTree = "<group>"; };
+		F4874E6D2442BFEC00ED7C17 /* HourlyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyCollectionViewCell.swift; sourceTree = "<group>"; };
+		F4874E6E2442BFEC00ED7C17 /* HourlyCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HourlyCollectionViewCell.xib; sourceTree = "<group>"; };
+		F4874E712442EBA600ED7C17 /* WeeklyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeeklyView.xib; sourceTree = "<group>"; };
+		F4874E732442EBF800ED7C17 /* EtcView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EtcView.xib; sourceTree = "<group>"; };
+		F4874E752442ECC600ED7C17 /* WeeklyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyView.swift; sourceTree = "<group>"; };
+		F4874E772442ECD500ED7C17 /* EtcView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcView.swift; sourceTree = "<group>"; };
 		F48CC71F243BF98600A49CB6 /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		F48CC726243BFD1E00A49CB6 /* WeeklyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCollectionViewCell.swift; sourceTree = "<group>"; };
 		F48CC72E243C2CBE00A49CB6 /* TopHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -249,6 +261,8 @@
 			isa = PBXGroup;
 			children = (
 				F48CC726243BFD1E00A49CB6 /* WeeklyCollectionViewCell.swift */,
+				F4874E6D2442BFEC00ED7C17 /* HourlyCollectionViewCell.swift */,
+				F4874E6E2442BFEC00ED7C17 /* HourlyCollectionViewCell.xib */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -270,6 +284,10 @@
 				F48CC72F243C2CBE00A49CB6 /* TopHeaderCollectionReusableView.xib */,
 				F48CC732243C2CD600A49CB6 /* HourlyHeaderCollectionReusableView.swift */,
 				F48CC733243C2CD600A49CB6 /* HourlyHeaderCollectionReusableView.xib */,
+				F4874E752442ECC600ED7C17 /* WeeklyView.swift */,
+				F4874E712442EBA600ED7C17 /* WeeklyView.xib */,
+				F4874E772442ECD500ED7C17 /* EtcView.swift */,
+				F4874E732442EBF800ED7C17 /* EtcView.xib */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -375,9 +393,12 @@
 				F43F6FC7243AEF95003C7303 /* LaunchScreen.storyboard in Resources */,
 				F43F6FC4243AEF95003C7303 /* Assets.xcassets in Resources */,
 				F48CC731243C2CBE00A49CB6 /* TopHeaderCollectionReusableView.xib in Resources */,
+				F4874E722442EBA600ED7C17 /* WeeklyView.xib in Resources */,
 				F48CC735243C2CD600A49CB6 /* HourlyHeaderCollectionReusableView.xib in Resources */,
+				F4874E702442BFEC00ED7C17 /* HourlyCollectionViewCell.xib in Resources */,
 				F48CC74A243C756900A49CB6 /* ListFooterView.xib in Resources */,
 				F43F6FC2243AEF94003C7303 /* Main.storyboard in Resources */,
+				F4874E742442EBF800ED7C17 /* EtcView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +419,7 @@
 				F43F6FED243B082C003C7303 /* GlobalVars.swift in Sources */,
 				F43F6FF1243B0F28003C7303 /* OnecallWeather.swift in Sources */,
 				F43F6FE6243AFB0D003C7303 /* EndpointType.swift in Sources */,
+				F4874E762442ECC600ED7C17 /* WeeklyView.swift in Sources */,
 				F43F6FFB243B3490003C7303 /* DetailViewController.swift in Sources */,
 				F43F6FFE243B3F2E003C7303 /* WeatherDataManager.swift in Sources */,
 				F43F6FF5243B131E003C7303 /* SearchViewController.swift in Sources */,
@@ -419,6 +441,8 @@
 				F40A7C26243EA6EA00FDB61A /* Date+Extension.swift in Sources */,
 				F43F6FE5243AFB0D003C7303 /* Networking.swift in Sources */,
 				F43F6FEA243AFF28003C7303 /* Response.swift in Sources */,
+				F4874E782442ECD500ED7C17 /* EtcView.swift in Sources */,
+				F4874E6F2442BFEC00ED7C17 /* HourlyCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

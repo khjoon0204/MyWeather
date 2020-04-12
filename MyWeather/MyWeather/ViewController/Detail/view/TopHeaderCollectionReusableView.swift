@@ -9,7 +9,12 @@
 import UIKit
 
 class TopHeaderCollectionReusableView: UICollectionReusableView {
+    private var dt: OnecallWeather?
+    
     @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var desc: UILabel!
+    @IBOutlet weak var temperature: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,4 +26,13 @@ class TopHeaderCollectionReusableView: UICollectionReusableView {
 //        }, completion: nil)
     }
     
+    func config(OnecallWeather d: OnecallWeather?){
+        guard let d = d else { return }
+        dt = d
+        name.text = d.title
+        guard let cur = d.current else { return }
+        desc.text = cur.weather?.first?.weatherDescription
+        let temp = isCelsius ? String(format: "%.0f", floor(cur.temp!)) : cur.temp?.toFahrenheit()
+        temperature.text = "\(temp!)°"
+    }
 }

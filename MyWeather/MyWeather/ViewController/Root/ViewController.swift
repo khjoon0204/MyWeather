@@ -29,7 +29,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        WeatherDataManager.shared.loadWeatherArray()
+        WeatherDataManager.shared.loadWeatherArray()        
         self.createVCObject()
         initVCs(vc: listVC)
     }
@@ -53,7 +53,7 @@ class ViewController: UIViewController {
     // MARK: - Function
     @IBAction func pinch(_ sender: UIPinchGestureRecognizer) {
         tmpPinchScale = sender.scale
-        print("\(#function) screen=\(curScreen) scale=\(pinchGestureRecognizer.scale.rounded()) state=\(pinchGestureRecognizer.state.rawValue) isTranslating=\(listVC.isTranslating)")
+//        print("\(#function) screen=\(curScreen) scale=\(pinchGestureRecognizer.scale.rounded()) state=\(pinchGestureRecognizer.state.rawValue) isTranslating=\(listVC.isTranslating)")
         if currentScreen == .list{
             guard !listVC.isTranslating else{return}
             let touch = sender.location(in: listVC.tableView)

@@ -40,8 +40,12 @@ class ListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         createDetailVCObject()
-        
-//        getWeathers()
+        WeatherDataManager.shared.updateWeatherArray { (complete) in
+            DispatchQueue.main.async {
+//                WeatherDataManager.shared.sortBySeq()
+                self.tableView.reloadData()
+            }
+        }
         setup()
     }
     
@@ -52,19 +56,6 @@ class ListViewController: UIViewController {
             detailPCs.append(vc)
         }
     }
-    
-//    private func getWeathers(){
-//        WeatherDataManager.shared.loadWeatherArray { (success) in
-//            self.tableView.reloadData()
-//        }
-//        // 임시: - 하루API 조회 제한
-////        WeatherDataManager.shared.updateWeatherArray { (success) in
-////            DispatchQueue.main.async {
-////                WeatherDataManager.shared.sortBySeq()
-////                self.tableView.reloadData()
-////            }
-////        }
-//    }
     
     private func setup(){
         tableView.delegate = self
@@ -77,9 +68,9 @@ class ListViewController: UIViewController {
     
     // MARK:- public
     var isTranslating = false
-    
     private var detailIndex: Int = -1
     
+    // MARK: - 뷰전환
     func showList(){
         guard let v = self.view.subviews.last else{return}
         self.view.subviews.last?.removeFromSuperview()
@@ -261,6 +252,7 @@ extension ListViewController: ListFooterViewDelegate{
     
     func selectSegment(_ sender: UISegmentedControl) {
         print(#function)
+        isCelsius = (sender.selectedSegmentIndex == 0)
     }
     
     func pressSearch(_ sender: UIButton) {
@@ -274,6 +266,7 @@ extension ListViewController: ListFooterViewDelegate{
 extension ListViewController: SearchViewControllerDelegate{
     func mksearchUpdate() {
         DispatchQueue.main.async {
+            self.createDetailVCObject()
             self.tableView.reloadData()
         }
     }

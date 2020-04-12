@@ -9,7 +9,7 @@
 import UIKit
 
 class WeatherCollectionViewFlowLayout: UICollectionViewFlowLayout {
-    
+    final let TOP_HEADER_MINIMUM_HEIGHT: CGFloat = 120
     var attributes: [UICollectionViewLayoutAttributes] = []
     
     override func prepare() {
@@ -44,8 +44,7 @@ class WeatherCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
         guard let topHeader = headers.first, let secondHeader = headers.last else { return nil }
         let topHeaderDefaultSize = topHeader.frame.size
-        let topHeaderMinimumHeight: CGFloat = 150
-        topHeader.frame.size.height = max(topHeaderMinimumHeight, topHeaderDefaultSize.height - offset.y)
+        topHeader.frame.size.height = max(TOP_HEADER_MINIMUM_HEIGHT, topHeaderDefaultSize.height - offset.y)
         topHeader.frame.origin.y = offset.y
         secondHeader.frame.origin.y = topHeader.frame.origin.y + topHeader.frame.size.height
         let cells = attributes.filter { (attribute) -> Bool in

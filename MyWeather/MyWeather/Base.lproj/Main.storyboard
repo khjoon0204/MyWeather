@@ -105,27 +105,74 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="idv-m1-JDZ">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hDZ-b0-Hgu">
-                                    <size key="itemSize" width="414" height="128"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Jpe-eI-wh5">
+                                    <size key="itemSize" width="414" height="1000"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" reuseIdentifier="WeeklyCollectionViewCell" translatesAutoresizingMaskIntoConstraints="NO" id="zf6-EV-4po" customClass="WeeklyCollectionViewCell" customModule="MyWeather" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="800"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="WeeklyCollectionViewCell" translatesAutoresizingMaskIntoConstraints="NO" id="zf6-EV-4po" customClass="WeeklyCollectionViewCell" customModule="MyWeather" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="82" height="1000"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="6YC-9f-QmF">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="800"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="82" height="1000"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U8P-lR-oaC">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="800"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="82" height="1000"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Imb-Oe-D7D">
+                                                            <rect key="frame" x="20" y="0.0" width="42" height="100"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" priority="750" constant="100" id="iGD-dZ-Zyz"/>
+                                                            </constraints>
+                                                        </stackView>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="stp-gr-u3C">
+                                                            <rect key="frame" x="0.0" y="100" width="82" height="0.5"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="0.5" id="N9T-F7-TNf"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LJM-0x-Mgb">
+                                                            <rect key="frame" x="20" y="100.5" width="42" height="20.5"/>
+                                                            <color key="backgroundColor" red="0.0" green="0.56284224989999998" blue="0.31881666180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3dQ-l6-XGZ">
+                                                            <rect key="frame" x="0.0" y="121" width="82" height="0.5"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="0.5" id="D0h-u8-T1p"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lpW-hS-CmY">
+                                                            <rect key="frame" x="20" y="121.5" width="42" height="878.5"/>
+                                                        </stackView>
+                                                    </subviews>
                                                     <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" priority="750" constant="800" id="N8y-ef-11B"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Imb-Oe-D7D" secondAttribute="trailing" constant="20" id="31X-36-5Fu"/>
+                                                        <constraint firstItem="Imb-Oe-D7D" firstAttribute="leading" secondItem="U8P-lR-oaC" secondAttribute="leading" constant="20" id="7jr-XN-ezD"/>
+                                                        <constraint firstItem="Imb-Oe-D7D" firstAttribute="top" secondItem="U8P-lR-oaC" secondAttribute="top" id="APL-sJ-d3s"/>
+                                                        <constraint firstAttribute="trailing" secondItem="lpW-hS-CmY" secondAttribute="trailing" constant="20" id="ASe-Jy-xEE"/>
+                                                        <constraint firstItem="stp-gr-u3C" firstAttribute="leading" secondItem="U8P-lR-oaC" secondAttribute="leading" id="ChZ-03-u8g"/>
+                                                        <constraint firstItem="3dQ-l6-XGZ" firstAttribute="leading" secondItem="U8P-lR-oaC" secondAttribute="leading" id="Njh-a8-QHP"/>
+                                                        <constraint firstItem="3dQ-l6-XGZ" firstAttribute="top" secondItem="LJM-0x-Mgb" secondAttribute="bottom" id="VqF-b8-oMU"/>
+                                                        <constraint firstAttribute="bottom" secondItem="lpW-hS-CmY" secondAttribute="bottom" id="W4V-LY-dAK"/>
+                                                        <constraint firstItem="LJM-0x-Mgb" firstAttribute="top" secondItem="stp-gr-u3C" secondAttribute="bottom" id="XEt-xx-3y5"/>
+                                                        <constraint firstItem="stp-gr-u3C" firstAttribute="top" secondItem="Imb-Oe-D7D" secondAttribute="bottom" id="dR7-a8-Lc7"/>
+                                                        <constraint firstAttribute="trailing" secondItem="stp-gr-u3C" secondAttribute="trailing" id="gcG-d3-sl5"/>
+                                                        <constraint firstItem="lpW-hS-CmY" firstAttribute="top" secondItem="3dQ-l6-XGZ" secondAttribute="bottom" id="o0N-dB-D3v"/>
+                                                        <constraint firstItem="LJM-0x-Mgb" firstAttribute="leading" secondItem="U8P-lR-oaC" secondAttribute="leading" constant="20" id="tBc-g6-hdz"/>
+                                                        <constraint firstAttribute="trailing" secondItem="3dQ-l6-XGZ" secondAttribute="trailing" id="uAG-tM-6sz"/>
+                                                        <constraint firstItem="lpW-hS-CmY" firstAttribute="leading" secondItem="U8P-lR-oaC" secondAttribute="leading" constant="20" id="uRm-Bz-kJ6"/>
+                                                        <constraint firstAttribute="trailing" secondItem="LJM-0x-Mgb" secondAttribute="trailing" constant="20" id="uwq-Lw-yF7"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -136,15 +183,20 @@
                                                 <constraint firstItem="U8P-lR-oaC" firstAttribute="leading" secondItem="6YC-9f-QmF" secondAttribute="leading" id="tvL-oW-0rR"/>
                                             </constraints>
                                         </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="desc" destination="LJM-0x-Mgb" id="K1x-9Q-Db6"/>
+                                            <outlet property="etcStack" destination="lpW-hS-CmY" id="Cp9-Ar-Oab"/>
+                                            <outlet property="weeklyStack" destination="Imb-Oe-D7D" id="Ggz-tQ-l9z"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="idv-m1-JDZ" firstAttribute="top" secondItem="3GY-kE-t4c" secondAttribute="top" id="ESt-aJ-gqT"/>
                             <constraint firstItem="idv-m1-JDZ" firstAttribute="leading" secondItem="rt4-lm-rrT" secondAttribute="leading" id="HnV-hj-zBh"/>
                             <constraint firstAttribute="bottom" secondItem="idv-m1-JDZ" secondAttribute="bottom" id="Xpd-3o-t0d"/>
+                            <constraint firstItem="rt4-lm-rrT" firstAttribute="top" secondItem="idv-m1-JDZ" secondAttribute="top" id="fTX-fh-rvs"/>
                             <constraint firstItem="idv-m1-JDZ" firstAttribute="trailing" secondItem="rt4-lm-rrT" secondAttribute="trailing" id="xoT-eC-bIR"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="rt4-lm-rrT"/>
@@ -155,7 +207,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VER-Us-B08" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1932" y="138"/>
+            <point key="canvasLocation" x="1931.8840579710147" y="137.94642857142856"/>
         </scene>
         <!--List View Controller-->
         <scene sceneID="xfL-cE-Q92">
@@ -165,26 +217,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="MRP-34-yTJ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="MRP-34-yTJ">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <gestureRecognizers/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DetailHeaderTableViewCell" id="kdk-vl-UPD" customClass="DetailHeaderTableViewCell" customModule="MyWeather" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="100.5"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="80.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kdk-vl-UPD" id="kn0-le-rZV">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="100.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="80.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QW1-F7-7un" userLabel="UserInteractable View">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="100.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="80.5"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3f4-81-HOz">
-                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="100.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="80.5"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9ob-kt-gB9">
-                                                                    <rect key="frame" x="15" y="32.5" width="71" height="36"/>
+                                                                    <rect key="frame" x="15" y="22.5" width="71" height="36"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQr-u5-UYp">
                                                                             <rect key="frame" x="0.0" y="0.0" width="71" height="36"/>
@@ -202,7 +254,7 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eN2-2m-TuB">
-                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="100.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="80.5"/>
                                                             <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                                         </view>
                                                     </subviews>
@@ -215,7 +267,7 @@
                                                         <constraint firstAttribute="bottom" secondItem="eN2-2m-TuB" secondAttribute="bottom" id="Ydb-e3-Fuf"/>
                                                         <constraint firstItem="3f4-81-HOz" firstAttribute="top" secondItem="QW1-F7-7un" secondAttribute="top" id="lwU-Af-MOL"/>
                                                         <constraint firstItem="eN2-2m-TuB" firstAttribute="top" secondItem="QW1-F7-7un" secondAttribute="top" id="oaJ-ly-kgw"/>
-                                                        <constraint firstAttribute="height" priority="751" constant="100" id="ugj-Rz-3H8"/>
+                                                        <constraint firstAttribute="height" priority="751" constant="80" id="ugj-Rz-3H8"/>
                                                         <constraint firstAttribute="trailing" secondItem="eN2-2m-TuB" secondAttribute="trailing" id="yJZ-Zu-Fwq"/>
                                                     </constraints>
                                                 </view>
