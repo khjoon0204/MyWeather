@@ -36,35 +36,35 @@ class WeeklyCollectionViewCell: UICollectionViewCell {
         let date_sunris = Date(timeIntervalSince1970: Double(cur.sunrise ?? 0))
         let date_sunset = Date(timeIntervalSince1970: Double(cur.sunset ?? 0))
         l0.title0.text = "일출"
-        l0.title0.text = "일몰"
+        l0.title1.text = "일몰"
         l0.desc0.text = getDateTime(date: date_sunris)
         l0.desc1.text = getDateTime(date: date_sunset)
         etcStack.addArrangedSubview(l0)
         let l1 = loadViewFromNib(nibName: "EtcView") as! EtcView
         l1.title0.text = "비 올 확률"
-        l1.title0.text = "습도"
+        l1.title1.text = "습도"
 //        l1.desc0.text = "\()%"
         l1.desc1.text = "\(cur.humidity!)%"
         etcStack.addArrangedSubview(l1)
         let l2 = loadViewFromNib(nibName: "EtcView") as! EtcView
         l2.title0.text = "바람"
-        l2.title0.text = "체감"
+        l2.title1.text = "체감"
         l2.desc0.text = "\(cur.windDeg!) \(cur.windSpeed!)m/s"
         l2.desc1.text = "\(cur.feelsLike!)°"
         etcStack.addArrangedSubview(l2)
         let l3 = loadViewFromNib(nibName: "EtcView") as! EtcView
         l3.title0.text = "강수량"
-        l3.title0.text = "기압"
-        l3.desc0.text = "\(cur.rain ?? Rain.init(the1H: 0))cm"
+        l3.title1.text = "기압"
+        l3.desc0.text = "\(cur.rain?.the1H ?? 0)cm"
         l3.desc1.text = "\(cur.pressure!)hPa"
         etcStack.addArrangedSubview(l3)
         let l4 = loadViewFromNib(nibName: "EtcView") as! EtcView
         l4.title0.text = "가시거리"
-        l4.title0.text = "자외선 지수"
+        l4.title1.text = "자외선 지수"
         l4.desc0.text = "\(cur.visibility!)km"
         l4.desc1.text = "\(cur.uvi!)"
         etcStack.addArrangedSubview(l4)
-        
+        layoutIfNeeded()
     }
     
     private func getDateTime(date: Date) -> String {

@@ -139,7 +139,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
             print("addDetailView indexPath=\(indexPath)")
             v.removeFromSuperview()
             vc.dele = self
-            vc.setupPageViewController(initPageIndex: indexPath.row)
+            vc.setupPageViewController(initPageIndex: indexPath.row)            
             cell.detailV.addSubview(v)
             v.pinEdgesToSuperView()
         }

@@ -18,23 +18,23 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="380"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lVO-ar-gCX">
-                            <rect key="frame" x="95" y="66" width="130" height="248.5"/>
+                            <rect key="frame" x="92.5" y="66" width="135" height="248.5"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lwu-aE-wXf">
-                                    <rect key="frame" x="47.5" y="0.0" width="35.5" height="48"/>
+                                    <rect key="frame" x="50" y="0.0" width="35.5" height="48"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eTn-hC-Sgc">
-                                    <rect key="frame" x="57.5" y="48" width="15.5" height="20.5"/>
+                                    <rect key="frame" x="60" y="48" width="15.5" height="20.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pDX-Cu-dyR">
-                                    <rect key="frame" x="0.0" y="68.5" width="130" height="180"/>
-                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="150"/>
+                                    <rect key="frame" x="0.0" y="68.5" width="135" height="180"/>
+                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Thin" family="Apple SD Gothic Neo" pointSize="150"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>

@@ -52,8 +52,9 @@ class DetailViewController: UIViewController {
     func setup(){
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.collectionViewLayout = WeatherCollectionViewFlowLayout()
-        collectionView.contentInsetAdjustmentBehavior = .always
+//        collectionView.collectionViewLayout = WeatherCollectionViewFlowLayout()
+        let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+        layout?.sectionHeadersPinToVisibleBounds = true
     }
     
     //MARK: - public
@@ -69,7 +70,9 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return CellType.count.rawValue
+        if section == HeaderType.topHeader.rawValue{return 0}
+        else{return CellType.count.rawValue}
+        
     }
     
     /// Cell Size
@@ -81,7 +84,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.view.bounds.width, height: WEEKLY_HEIGHT)
     }
-        
+
     /// Header Size
     /// - Parameters:
     ///   - collectionView: <#collectionView description#>
