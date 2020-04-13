@@ -47,13 +47,7 @@ class WeatherCollectionViewFlowLayout: UICollectionViewFlowLayout {
         topHeader.frame.size.height = max(TOP_HEADER_MINIMUM_HEIGHT, topHeaderDefaultSize.height - offset.y)
         topHeader.frame.origin.y = offset.y
         secondHeader.frame.origin.y = topHeader.frame.origin.y + topHeader.frame.size.height
-        let cells = attributes.filter { (attribute) -> Bool in
-            return (attribute.representedElementKind != UICollectionView.elementKindSectionHeader) &&  (attribute.representedElementKind != UICollectionView.elementKindSectionFooter)
-        }
-        let limit = secondHeader.frame.origin.y + secondHeader.frame.size.height
-        for oneCell in cells {
-            oneCell.frame.origin.y = limit
-        }
+        
         return attributes
     }
 }

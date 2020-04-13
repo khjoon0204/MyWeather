@@ -18,22 +18,22 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QLR-l3-CNe">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
+                            <rect key="frame" x="0.0" y="5" width="414" height="20"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KYU-bh-RwC">
-                                    <rect key="frame" x="0.0" y="0.0" width="15.5" height="30"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="15.5" height="20"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ImF-pe-JA7">
-                                    <rect key="frame" x="15.5" y="0.0" width="308.5" height="30"/>
+                                    <rect key="frame" x="15.5" y="0.0" width="308.5" height="20"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="--" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mrq-mW-Aa3">
-                                    <rect key="frame" x="324" y="0.0" width="60" height="30"/>
+                                    <rect key="frame" x="324" y="0.0" width="60" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="60" id="jJM-eW-3QS"/>
                                     </constraints>
@@ -42,7 +42,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="--" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xEp-ry-lXb">
-                                    <rect key="frame" x="384" y="0.0" width="30" height="30"/>
+                                    <rect key="frame" x="384" y="0.0" width="30" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="30" id="lJC-yJ-E6d"/>
                                     </constraints>
@@ -55,10 +55,10 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="QLR-l3-CNe" secondAttribute="bottom" id="Cbh-CA-xnB"/>
+                        <constraint firstAttribute="bottom" secondItem="QLR-l3-CNe" secondAttribute="bottom" constant="5" id="Cbh-CA-xnB"/>
                         <constraint firstAttribute="trailing" secondItem="QLR-l3-CNe" secondAttribute="trailing" id="LEO-Js-DdV"/>
                         <constraint firstAttribute="height" constant="30" id="fL2-Qs-FlW"/>
-                        <constraint firstItem="QLR-l3-CNe" firstAttribute="top" secondItem="WFk-2Z-XeD" secondAttribute="top" id="jG9-YJ-Mgg"/>
+                        <constraint firstItem="QLR-l3-CNe" firstAttribute="top" secondItem="WFk-2Z-XeD" secondAttribute="top" constant="5" id="jG9-YJ-Mgg"/>
                         <constraint firstItem="QLR-l3-CNe" firstAttribute="leading" secondItem="WFk-2Z-XeD" secondAttribute="leading" id="znj-0w-SCJ"/>
                     </constraints>
                 </view>

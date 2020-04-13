@@ -44,14 +44,17 @@
                             </button>
                             <barButtonItem key="rightBarButtonItem" style="plain" id="Xmf-s0-skR">
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SfM-qR-nLk">
-                                    <rect key="frame" x="344" y="10" width="50" height="24"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <rect key="frame" x="344" y="0.0" width="50" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" image="plus.circle" catalog="system"/>
                                     <connections>
-                                        <action selector="pressSearch:" destination="iN0-l3-epB" eventType="touchUpInside" id="QMb-B2-pJ0"/>
+                                        <action selector="pressSearch:" destination="iN0-l3-epB" eventType="touchUpInside" id="VJq-cH-h6x"/>
                                     </connections>
                                 </button>
+                                <connections>
+                                    <action selector="pressSearchItem:" destination="iN0-l3-epB" id="bOV-5w-6PO"/>
+                                </connections>
                             </barButtonItem>
                         </navigationItem>
                     </items>
@@ -65,6 +68,9 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="segment" destination="rpW-Ug-BtB" id="eeu-w1-Bsd"/>
+            </connections>
             <point key="canvasLocation" x="131.8840579710145" y="-115.51339285714285"/>
         </view>
     </objects>

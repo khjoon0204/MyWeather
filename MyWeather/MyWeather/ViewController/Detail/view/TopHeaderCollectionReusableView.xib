@@ -48,7 +48,6 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemIndigoColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="lVO-ar-gCX" firstAttribute="centerY" secondItem="Qzo-aI-BJZ" secondAttribute="centerY" id="HcA-WP-cyb"/>
                         <constraint firstItem="lVO-ar-gCX" firstAttribute="centerX" secondItem="Qzo-aI-BJZ" secondAttribute="centerX" id="Xq1-6g-jUg"/>

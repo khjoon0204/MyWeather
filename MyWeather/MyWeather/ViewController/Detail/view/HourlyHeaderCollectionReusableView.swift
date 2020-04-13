@@ -28,8 +28,8 @@ class HourlyHeaderCollectionReusableView: UICollectionReusableView {
         collectionView.dataSource = self
     }
     
-    func config(OnecallWeather w: OnecallWeather?){
-        dt = w
+    func config(OnecallWeather d: OnecallWeather?){        
+        dt = d
         setup()
     }
     

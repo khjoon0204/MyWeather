@@ -29,7 +29,7 @@ class HourlyCollectionViewCell: UICollectionViewCell {
         temperature.text = "\(temp!)°"
     }
 
-    func getDateTime(date: Date) -> String {
+    private func getDateTime(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko")
         dateFormatter.dateFormat = "a h시"

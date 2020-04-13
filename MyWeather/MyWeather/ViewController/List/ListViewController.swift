@@ -27,13 +27,7 @@ class ListViewController: UIViewController {
     var touchIndex: IndexPath?
     var touchCellRect: CGRect = .zero
     
-    
 //    lazy var pages: [DetailViewController] = {
-//        let arr = [DetailViewController](repeating: UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController, count: WeatherDataManager.shared.weathers.count)
-//        for i in 0..<arr.count {
-////            addChild(arr[i])
-////            arr[i].setup(i)
-//        }
 //        return arr
 //    }()
         
@@ -43,10 +37,17 @@ class ListViewController: UIViewController {
         WeatherDataManager.shared.updateWeatherArray { (complete) in
             DispatchQueue.main.async {
 //                WeatherDataManager.shared.sortBySeq()
-                self.tableView.reloadData()
+                if self.viewC.currentScreen == .list{self.tableView.reloadData()}
+                else{
+                    guard  self.detailIndex != -1 else {
+                        return
+                    }
+                    let vc = self.detailPCs[self.detailIndex]
+                    vc.dele = self
+                    vc.setupPageViewController(initPageIndex: self.detailIndex)
+                }
             }
-        }
-        
+        }        
         setup()
     }
     
@@ -112,7 +113,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     // MARK: - UITableView Cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "DetailHeaderTableViewCell", for: indexPath) as? DetailHeaderTableViewCell else { return UITableViewCell() }
-        cell.config(data: WeatherDataManager.shared.weathers[indexPath.row])
+        cell.config(OnecallWeather: WeatherDataManager.shared.weathers[indexPath.row])
         changeHeight(indexPath: indexPath, cell: cell)
         transDetailView(indexPath: indexPath, cell: cell)
         addDetailView(indexPath: indexPath, cell: cell)
@@ -122,16 +123,23 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func changeHeight(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
 //        guard detailIndex == -1 else{return}
         if indexPath == touchIndex{
-            let dist = touchCellRect.minY * ((viewC.pinchGestureRecognizer.scale - 1) / PINCH_SCALE_TRANSLATE)
-            cell.constraintHeight.constant = CELL_HEIGHT * max(viewC.pinchGestureRecognizer.scale, 1.0) + dist
+            let scale = viewC.pinchGestureRecognizer.scale
+            let dist = touchCellRect.minY * ((scale - 1) / PINCH_SCALE_TRANSLATE)
+            cell.constraintHeight.constant = CELL_HEIGHT * max(scale, 1.0) + dist
             tableViewtop.constant = -dist
+            
+            cell.nameV.alpha = 1.0 / scale
+            cell.detailV.alpha = min(scale - 1, 1.0)
+            
 //            print("changeHeight index=\(indexPath) scale=\(viewC.pinchGestureRecognizer.scale.rounded()) touchCellY=\(touchCellY.rounded()) tableViewtop.constant=\(tableViewtop.constant)")
         }
         else{
             cell.constraintHeight.constant = CELL_HEIGHT
+            cell.nameV.alpha = 1.0
+            cell.detailV.alpha = 0.0
         }
     }
-    
+        
     func addDetailView(indexPath: IndexPath, cell: DetailHeaderTableViewCell){
         guard viewC.pinchGestureRecognizer.state.rawValue < 1 else {return}
         guard detailPCs.count > 0 else {return}
@@ -181,9 +189,10 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
             self.view.layoutIfNeeded()
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
+            cell.nameV.alpha = 0.0
+            cell.detailV.alpha = 1.0
         }) { (complete) in
             print("animation complete!")
-            //                self.viewC.translateToDetail(idxPath.row)
             self.showDetail(detailView: v)
             self.isTranslating = false
             self.detailIndex = indexPath.row
@@ -233,6 +242,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerV = UIView.loadFromNibNamed(nibNamed: "ListFooterView") as! ListFooterView
+        footerV.segment.selectedSegmentIndex = isCelsius ? 0 : 1
         footerV.dele = self
         return footerV
     }
@@ -254,6 +264,7 @@ extension ListViewController: ListFooterViewDelegate{
     func selectSegment(_ sender: UISegmentedControl) {
         print(#function)
         isCelsius = (sender.selectedSegmentIndex == 0)
+        self.tableView.reloadData()
     }
     
     func pressSearch(_ sender: UIButton) {
@@ -277,5 +288,6 @@ extension ListViewController: DetailPageControllerDelegate{
     func pressList(_ sender: Any) {
         showList()
     }
-    
 }
+
+

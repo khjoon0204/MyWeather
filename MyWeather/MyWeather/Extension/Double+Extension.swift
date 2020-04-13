@@ -10,17 +10,33 @@ import Foundation
 
 //MARK: Extension+Double
 extension Double {
-    // kelvin to celsius
     func toCelsius() -> String {
-        let arg = self - 273.15
+        let arg = calculateCelsius(fahrenheit: self)
         return String(format: "%.0f", arguments: [arg])
     }
     
-    // kelvin to fahrenheit
     func toFahrenheit() -> String {
-        let arg = (self * 9/5) - 459.67
+        let arg: Double = self.toFahrenheit()
         return String(format: "%.0f", arguments: [arg])
     }
+    
+    func toFahrenheit() -> Double {
+        let arg = calculateFahrenheit(celsius: self)
+        return arg
+    }
+    
+    func calculateCelsius(fahrenheit: Double) -> Double {
+        var celsius: Double
+        celsius = (fahrenheit - 32) * 5 / 9
+        return celsius
+    }
+
+    func calculateFahrenheit(celsius: Double) -> Double {
+        var fahrenheit: Double
+        fahrenheit = celsius * 9 / 5 + 32
+        return fahrenheit
+    }
+
     
     // rounding double to 2 decimal place
     func round2Decimal() -> Double {

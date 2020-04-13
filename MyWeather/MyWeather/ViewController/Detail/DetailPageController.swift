@@ -98,15 +98,17 @@ class DetailPageViewController: UIPageViewController, UIPageViewControllerDataSo
     
     // MARK: - UIPageViewController Delegate
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        guard let firstViewController = viewControllers?.first, let firstViewControllerIndex = vcs.firstIndex(of: firstViewController as! DetailViewController) else{
-            return
+        guard let firstViewController = viewControllers?.first,
+            let firstViewControllerIndex = vcs.firstIndex(of: firstViewController as! DetailViewController)
+            else{
+                return
         }
         parentVC.pageControl.currentPage = firstViewControllerIndex
         print("currentpage \(parentVC.pageControl.currentPage)")
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let viewControllerIndex = vcs.firstIndex(of: viewController as! DetailViewController) else {
+        guard let viewControllerIndex = vcs.firstIndex(of: viewController as! DetailViewController), vcs.count > 1 else {
             return nil
         }
         let previousIndex = viewControllerIndex - 1
@@ -120,7 +122,7 @@ class DetailPageViewController: UIPageViewController, UIPageViewControllerDataSo
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let viewControllerIndex = vcs.firstIndex(of: viewController as! DetailViewController) else {
+        guard let viewControllerIndex = vcs.firstIndex(of: viewController as! DetailViewController), vcs.count > 1 else {
             return nil
         }
         let nextIndex = viewControllerIndex + 1

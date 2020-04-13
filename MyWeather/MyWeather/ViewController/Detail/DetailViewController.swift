@@ -11,7 +11,7 @@ import UIKit
 class DetailViewController: UIViewController {
     final let TOP_HEADER_HEIGHT: CGFloat = 380
     final let HOURLY_HEADER_HEIGHT: CGFloat = 116
-    final let WEEKLY_HEIGHT: CGFloat = 800
+    final let WEEKLY_HEIGHT: CGFloat = 610
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -51,13 +51,9 @@ class DetailViewController: UIViewController {
     func setup(){
         collectionView.delegate = self
         collectionView.dataSource = self
-//        collectionView.collectionViewLayout = WeatherCollectionViewFlowLayout()
-        let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
-        layout?.sectionHeadersPinToVisibleBounds = true
-//        layout?.sectionInset = UIEdgeInsets.init(top: -120, left: 0, bottom: 0, right: 0)
-        
-        
-        
+        collectionView.collectionViewLayout = WeatherCollectionViewFlowLayout()
+//        let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+//        layout?.sectionHeadersPinToVisibleBounds = true
     }
     
     //MARK: - public
@@ -75,6 +71,8 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == HeaderType.topHeader.rawValue{return 0}
         else{return CellType.count.rawValue}
+//        return section == 0 ? 0 : 1
+        
     }
     
     /// Cell Size
@@ -112,6 +110,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WeeklyCollectionViewCell", for: indexPath) as? WeeklyCollectionViewCell else { return UICollectionViewCell() }
 //            print(#function)
             cell.config(OnecallWeather: self.dt)
+//            cell.layer.zPosition = -999
             return cell
         default: break
         }

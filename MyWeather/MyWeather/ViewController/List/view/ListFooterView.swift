@@ -14,7 +14,8 @@ protocol ListFooterViewDelegate {
 }
 class ListFooterView: UIView {
     var dele: ListFooterViewDelegate?
-
+    @IBOutlet weak var segment: UISegmentedControl!
+    
     @IBAction func selectSegment(_ sender: UISegmentedControl) {
         dele?.selectSegment(sender)
     }
@@ -24,5 +25,5 @@ class ListFooterView: UIView {
     @IBAction func pressWeb(_ sender: UIButton) {
         dele?.pressWeb(sender)
     }
-    
+
 }
