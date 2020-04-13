@@ -18,12 +18,10 @@ import Foundation
 
 class WeatherDataManager: NSObject {
     private let WEATHER_ARR_KEY = "kWeatherArrKey"
-    
     public static let shared = WeatherDataManager()
-    
     private let networking = Networking()
-    
     private var ws: [OnecallWeather] = []
+    
     public var weathers: [OnecallWeather]{
         get{return ws}
     }
@@ -70,7 +68,6 @@ class WeatherDataManager: NSObject {
             print(errorMessage)
             completion?(false)
         }
-        
     }
     
     func sortBySeq(){

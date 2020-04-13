@@ -33,6 +33,10 @@ class HourlyHeaderCollectionReusableView: UICollectionReusableView {
         setup()
     }
     
+//    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+//        super.apply(layoutAttributes)
+//        print("SecondHeader zPos=\(self.layer.zPosition)")
+//    }
 }
 
 extension HourlyHeaderCollectionReusableView: UICollectionViewDelegate, UICollectionViewDataSource{

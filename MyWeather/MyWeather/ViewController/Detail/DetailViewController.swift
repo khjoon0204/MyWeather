@@ -52,8 +52,6 @@ class DetailViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.collectionViewLayout = WeatherCollectionViewFlowLayout()
-//        let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
-//        layout?.sectionHeadersPinToVisibleBounds = true
     }
     
     //MARK: - public
@@ -110,7 +108,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WeeklyCollectionViewCell", for: indexPath) as? WeeklyCollectionViewCell else { return UICollectionViewCell() }
 //            print(#function)
             cell.config(OnecallWeather: self.dt)
-//            cell.layer.zPosition = -999
+
             return cell
         default: break
         }
@@ -118,7 +116,6 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             let headerType = HeaderType(rawValue: indexPath.section)
@@ -141,14 +138,5 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return UICollectionReusableView()
     }
 
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        if section == HeaderType.hourlyHeader.rawValue{
-//            return UIEdgeInsets(top: -120, left: 0, bottom: 0, right: 0)
-//        }
-//        return .zero
-//    }
-
-    
 }
 

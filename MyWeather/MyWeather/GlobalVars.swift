@@ -9,6 +9,7 @@
 import UIKit
 
 let OPENWEATHERMAP_API_KEY = "fe9e6261e3f670bd97dd3ab01c92086b"
+let WEATHER_URL = "https://weather.com"
 
 var isCelsius: Bool = true
 
@@ -34,7 +35,6 @@ func loadViewFromNib(nibName: String) -> UIView {
     let nib = UINib(nibName: nibName, bundle: nil)
     return nib.instantiate(withOwner: nil, options: nil).first as! UIView
 }
-
 
 enum WeekDay: Int {
     case Sun = 1

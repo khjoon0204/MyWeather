@@ -31,4 +31,10 @@ class TopHeaderCollectionReusableView: UICollectionReusableView {
         let temp = isCelsius ? String(format: "%.0f", floor(cur.temp!)) : cur.temp?.toFahrenheit()
         temperature.text = "\(temp!)°"
     }
+    
+//    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+//        super.apply(layoutAttributes)
+//        print("TopHeader zPos=\(self.layer.zPosition)")
+//    }
+    
 }

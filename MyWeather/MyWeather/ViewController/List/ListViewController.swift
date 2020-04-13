@@ -27,10 +27,6 @@ class ListViewController: UIViewController {
     var touchIndex: IndexPath?
     var touchCellRect: CGRect = .zero
     
-//    lazy var pages: [DetailViewController] = {
-//        return arr
-//    }()
-        
     override func viewDidLoad() {
         super.viewDidLoad()
         createDetailVCObject()
@@ -127,10 +123,8 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
             let dist = touchCellRect.minY * ((scale - 1) / PINCH_SCALE_TRANSLATE)
             cell.constraintHeight.constant = CELL_HEIGHT * max(scale, 1.0) + dist
             tableViewtop.constant = -dist
-            
             cell.nameV.alpha = 1.0 / scale
             cell.detailV.alpha = min(scale - 1, 1.0)
-            
 //            print("changeHeight index=\(indexPath) scale=\(viewC.pinchGestureRecognizer.scale.rounded()) touchCellY=\(touchCellY.rounded()) tableViewtop.constant=\(tableViewtop.constant)")
         }
         else{
@@ -167,7 +161,6 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
             DispatchQueue.main.async {
                 self.tableView(self.tableView, didSelectRowAt: indexPath)
             }
-            
         }
     }
     
@@ -259,6 +252,7 @@ extension ListViewController: UITableViewDragDelegate, UITableViewDropDelegate{
 extension ListViewController: ListFooterViewDelegate{
     func pressWeb(_ sender: UIButton) {
         print(#function)
+        
     }
     
     func selectSegment(_ sender: UISegmentedControl) {

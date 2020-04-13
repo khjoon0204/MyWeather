@@ -58,16 +58,13 @@ class SearchViewController: UIViewController {
                 WeatherDataManager.shared.saveWeatherArray()
                 self.dele?.mksearchUpdate()
                 DispatchQueue.main.async {self.dismiss(animated: true, completion: nil)}
-                
             }
-            
         }
     }
 }
 
 extension SearchViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // TODO: - 스크롤방향에 따라 키보드 보이기/감추기
 //        self.view.endEditing(true)
     }
 }
