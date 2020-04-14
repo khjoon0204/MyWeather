@@ -88,7 +88,10 @@ class DetailPageViewController: UIPageViewController, UIPageViewControllerDataSo
     }
     
     private func createDetailVCObject(){
-        vcs.removeAll()
+        vcs.removeAll{
+            $0.view.removeFromSuperview()
+            return true
+        }
         for i in WeatherDataManager.shared.weathers {
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
             vc.config(w: i)

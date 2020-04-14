@@ -48,7 +48,10 @@ class ListViewController: UIViewController {
     }
     
     private func createDetailVCObject(){
-        detailPCs.removeAll()
+        detailPCs.removeAll{
+            $0.view.removeFromSuperview()
+            return true
+        }
         for i in 0..<WeatherDataManager.shared.weathers.count {
             let vc = storyboard?.instantiateViewController(withIdentifier: "DetailPageController") as! DetailPageController
             detailPCs.append(vc)
@@ -215,9 +218,11 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             WeatherDataManager.shared.removeWeather(at: indexPath.row)
+            detailPCs.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             WeatherDataManager.shared.setWeathersSequence()
             WeatherDataManager.shared.saveWeatherArray()
+            tableView.reloadData()
         }
     }
     
@@ -227,6 +232,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         WeatherDataManager.shared.insertWeather(weather: movedObject, at: destinationIndexPath.row)
         WeatherDataManager.shared.setWeathersSequence()
         WeatherDataManager.shared.saveWeatherArray()
+        tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

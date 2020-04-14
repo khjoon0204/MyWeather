@@ -44,12 +44,12 @@ class WeeklyCollectionViewCell: UICollectionViewCell {
         l1.title0.text = "비 올 확률"
         l1.title1.text = "습도"
 //        l1.desc0.text = "\()%"
-        l1.desc1.text = "\(cur.humidity!)%"
+        l1.desc1.text = "\(cur.humidity ?? 0)%"
         etcStack.addArrangedSubview(l1)
         let l2 = loadViewFromNib(nibName: "EtcView") as! EtcView
         l2.title0.text = "바람"
         l2.title1.text = "체감"
-        l2.desc0.text = "\(cur.windDeg!) \(cur.windSpeed!)m/s"
+        l2.desc0.text = "\(cur.windDeg == nil ? "" : "\(cur.windDeg)") \(cur.windSpeed ?? 0)m/s"
         l2.desc1.text = "\(cur.feelsLike!)°"
         etcStack.addArrangedSubview(l2)
         let l3 = loadViewFromNib(nibName: "EtcView") as! EtcView
@@ -61,8 +61,8 @@ class WeeklyCollectionViewCell: UICollectionViewCell {
         let l4 = loadViewFromNib(nibName: "EtcView") as! EtcView
         l4.title0.text = "가시거리"
         l4.title1.text = "자외선 지수"
-        l4.desc0.text = "\(cur.visibility!)km"
-        l4.desc1.text = "\(cur.uvi!)"
+        l4.desc0.text = "\((Double(cur.visibility ?? 0)/1000.0))km"
+        l4.desc1.text = "\(cur.uvi ?? 0)"
         etcStack.addArrangedSubview(l4)
         layoutIfNeeded()
     }
